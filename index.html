@@ -1,0 +1,1663 @@
+<html lang="es"><head><script data-bard-injected="true">(function(firebaseConfig, initialAuthToken, appId) {
+        window.__firebase_config = firebaseConfig;
+        window.__initial_auth_token = initialAuthToken;
+        window.__app_id = appId;
+            })("\n{\n  \"apiKey\": \"AIzaSyCqyCcs2R2e7AegGjvFAwG98wlamtbHvZY\",\n  \"authDomain\": \"bard-frontend.firebaseapp.com\",\n  \"projectId\": \"bard-frontend\",\n  \"storageBucket\": \"bard-frontend.firebasestorage.app\",\n  \"messagingSenderId\": \"175205271074\",\n  \"appId\": \"1:175205271074:web:2b7bd4d34d33bf38e6ec7b\"\n}\n","eyJhbGciOiJSUzI1NiIsImtpZCI6IjBmNDhjMDQxMTUxMmM3NTM4NjJkMmFkZWVmYjg0NTczZTAyZmFlMjMiLCJ0eXAiOiJKV1QifQ.eyJzdWIiOiJmaXJlYmFzZS1hZG1pbnNkay1mYnN2Y0BiYXJkLWZyb250ZW5kLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwiYXVkIjoiaHR0cHM6Ly9pZGVudGl0eXRvb2xraXQuZ29vZ2xlYXBpcy5jb20vZ29vZ2xlLmlkZW50aXR5LmlkZW50aXR5dG9vbGtpdC52MS5JZGVudGl0eVRvb2xraXQiLCJ1aWQiOiIxMTM4MDM4MDE5NTY2NzEzNzI1NyIsImlzcyI6ImZpcmViYXNlLWFkbWluc2RrLWZic3ZjQGJhcmQtZnJvbnRlbmQuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJjbGFpbXMiOnsiYXBwSWQiOiJjXzU2MjIzZTcwNzM0ZTViYmZfaW5kZXguaHRtbC0yNyJ9LCJleHAiOjE3ODI0MzY0MjEsImlhdCI6MTc4MjQzMjgyMSwiYWxnIjoiUlMyNTYifQ.NeZPXjGYF_091boptOCM5CWig8rWW4yhiPQ0bNloamKgHpCbaLBQMMSxibufm4eWUPBo1Vz5pA86_y7GSzziRyqC7_LLn2_xFGBftHHDpuYzlCqvEHBBIW7Rnklpcx7Hv3uDEojdqjX2m7oBOSN1m32LO8V31zL9FdYJ9nWtYQwNs5XUQyy0RVWnBJ4yUBjThuT8qF2i8QjegyUwQNjw14hs503LSHEpxYxWEMJ45PqiADWtOy1NLO5T5TpzOsjJlKc9i6wc7KQt3I6q6ucFJ9G-eRFeeySWV0TN7aFwzRkceacltvwM36Eu2zCSh3pfsllWJOe3DEjO4feGSkK0-Q","c_56223e70734e5bbf_index.html-27")</script><script data-bard-injected="true">(function() {
+  document.addEventListener('mouseup', function(e) {
+    const selection = window.getSelection();
+    const selectedText = selection ? selection.toString().trim() : '';
+    if (selectedText.length > 0) {
+      const range = selection.getRangeAt(0);
+      // Clone the original user selection range before DOM manipulation. In browser DOM mechanics,
+      // removing temporary nodes from within an active selection invalidates and collapses the selection pointers.
+      const originalRange = range.cloneRange();
+      const rect = range.getBoundingClientRect();
+
+      const startTag = document.createTextNode('<selection-tag>');
+      const endTag = document.createTextNode('</selection-tag>');
+
+      const rangeStart = range.cloneRange();
+      rangeStart.collapse(true);
+
+      const rangeEnd = range.cloneRange();
+      rangeEnd.collapse(false);
+
+      // Insert end tag first to avoid shifting start boundary if they are in the same node.
+      rangeEnd.insertNode(endTag);
+      rangeStart.insertNode(startTag);
+
+      const fullTextWithTags = document.body.innerText;
+
+      if (startTag.parentNode) {
+        startTag.parentNode.removeChild(startTag);
+      }
+      if (endTag.parentNode) {
+        endTag.parentNode.removeChild(endTag);
+      }
+
+      // Explicitly restore the user's original selection range. Without this restoration, the selection collapses
+      // instantly, causing subsequent mouse movements or clicks to evaluate window.getSelection() as empty,
+      // which triggers a premature textSelectionCleared post-message that wipes out artifactTextWithTags in the store.
+      selection.removeAllRanges();
+      selection.addRange(originalRange);
+
+      window.parent.postMessage({
+        type: 'textSelection',
+        text: selectedText,
+        fullTextWithTags: fullTextWithTags,
+        rect: {
+          top: rect.top,
+          left: rect.left,
+          bottom: rect.bottom,
+          right: rect.right,
+          width: rect.width,
+          height: rect.height,
+        },
+      }, '*');
+    } else {
+      window.parent.postMessage({
+        type: 'textSelectionCleared',
+      }, '*');
+    }
+  }, true);
+})();</script><script data-bard-injected="true">(function(){'use strict';window.addEventListener("message",a=>{a.data&&a.data.type==="SUPPLEMENTAL_DATA_UPDATE"&&window.dispatchEvent(new CustomEvent("supplementaldataupdate",{detail:a.data.data}))});}).call(this);
+</script><script data-bard-injected="true">(function(){'use strict';var h=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,d){if(a==Array.prototype||a==Object.prototype)return a;a[b]=d.value;return a};function l(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var d=a[b];if(d&&d.Math==Math)return d}throw Error("Cannot find global object");}var n=l(this);
+function p(a,b){if(b)a:{var d=n;a=a.split(".");for(var c=0;c<a.length-1;c++){var e=a[c];if(!(e in d))break a;d=d[e]}a=a[a.length-1];c=d[a];b=b(c);b!=c&&b!=null&&h(d,a,{configurable:!0,writable:!0,value:b})}}function r(a){function b(c){return a.next(c)}function d(c){return a.throw(c)}return new Promise(function(c,e){function f(g){g.done?c(g.value):Promise.resolve(g.value).then(b,d).then(f,e)}f(a.next())})}function t(a){return r(a())}
+p("Object.values",function(a){return a?a:function(b){var d=[],c;for(c in b)Object.prototype.hasOwnProperty.call(b,c)&&d.push(b[c]);return d}});p("Array.prototype.includes",function(a){return a?a:function(b,d){var c=this;c instanceof String&&(c=String(c));var e=c.length;d=d||0;for(d<0&&(d=Math.max(d+e,0));d<e;d++){var f=c[d];if(f===b||Object.is(f,b))return!0}return!1}});/*
+
+ MIT License
+
+ Copyright (c) 2017-2023 W.Y.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+
+*/
+function u(a,b){var d=a.style;b.backgroundColor&&(d.backgroundColor=b.backgroundColor);b.width&&(d.width=`${b.width}px`);b.height&&(d.height=`${b.height}px`);var c=b.style;c!=null&&Object.keys(c).forEach(e=>{d[e]=c[e]})};var v=(()=>{var a=0;return()=>{a+=1;return`u${`0000${(Math.random()*1679616<<0).toString(36)}`.slice(-4)}${a}`}})();function w(a){var b=[];for(let d=0,c=a.length;d<c;d++)b.push(a[d]);return b}let x=null;function y(a={}){return x?x:a.l?x=a.l:x=w(window.getComputedStyle(document.documentElement))}function z(a,b){return(a=(a.ownerDocument.defaultView||window).getComputedStyle(a).getPropertyValue(b))?parseFloat(a.replace("px","")):0}
+function A(a,b={}){var d;if(!(d=b.width)){d=z(a,"border-left-width");var c=z(a,"border-right-width");d=a.clientWidth+d+c}(b=b.height)||(b=z(a,"border-top-width"),c=z(a,"border-bottom-width"),b=a.clientHeight+b+c);return{width:d,height:b}}function B(a){return new Promise((b,d)=>{var c=new Image;c.onload=()=>{c.decode().then(()=>{requestAnimationFrame(()=>b(c))})};c.onerror=d;c.crossOrigin="anonymous";c.decoding="async";c.src=a})}
+function C(a){return t(function*(){return Promise.resolve().then(()=>(new XMLSerializer).serializeToString(a)).then(encodeURIComponent).then(b=>`data:image/svg+xml;charset=utf-8,${b}`)})}
+function D(a,b,d){return t(function*(){var c=document.createElementNS("http://www.w3.org/2000/svg","svg"),e=document.createElementNS("http://www.w3.org/2000/svg","foreignObject");c.setAttribute("width",`${b}`);c.setAttribute("height",`${d}`);c.setAttribute("viewBox",`0 0 ${b} ${d}`);e.setAttribute("width","100%");e.setAttribute("height","100%");e.setAttribute("x","0");e.setAttribute("y","0");e.setAttribute("externalResourcesRequired","true");c.appendChild(e);e.appendChild(a);return C(c)})}
+var E=(a,b)=>{if(a instanceof b)return!0;a=Object.getPrototypeOf(a);return a===null?!1:a.constructor.name===b.name||E(a,b)};function F(a,b){return y(b).map(d=>{var c=a.getPropertyValue(d),e=a.getPropertyPriority(d);return`${d}: ${c}${e?" !important":""};`}).join(" ")}
+function G(a,b,d,c){a=window.getComputedStyle(a,d);var e=a.getPropertyValue("content");if(e!==""&&e!=="none"){var f=v();try{b.className=`${b.className} ${f}`}catch(k){return}e=document.createElement("style");var g=e.appendChild;d=`.${f}:${d}`;a.cssText?(c=a.getPropertyValue("content"),c=`${a.cssText} content: '${c.replace(/'|"/g,"")}';`):c=F(a,c);g.call(e,document.createTextNode(`${d}{${c}}`));b.appendChild(e)}};function H(a){return a.search(/^(data:)/)!==-1}function I(a,b,d){return t(function*(){var c=yield fetch(a,b);if(c.status===404)throw Error(`Resource "${c.url}" not found`);var e=yield c.blob();return new Promise((f,g)=>{var k=new FileReader;k.onerror=g;k.onloadend=()=>{try{f(d({o:c,result:k.result}))}catch(m){g(m)}};k.readAsDataURL(e)})})}const J={};function K(a,b,d){var c=a.replace(/\?.*/,"");d&&(c=a);/ttf|otf|eot|woff2?/i.test(c)&&(c=c.replace(/.*\//,""));return b?`[${b}]${c}`:c}
+function L(a,b,d){return t(function*(){var c=K(a,b,d.C);if(J[c]!=null)return J[c];d.u&&(a+=(/\?/.test(a)?"&":"?")+(new Date).getTime());try{let f=yield I(a,d.i,({o:g,result:k})=>{b||(b=g.headers.get("Content-Type")||"");return k.split(/,/)[1]});var e=`data:${b};base64,${f}`}catch(f){e=d.B||""}return J[c]=e})};const M={P:"application/font-woff",R:"application/font-woff",N:"application/font-truetype",v:"application/vnd.ms-fontobject",H:"image/png",F:"image/jpeg",D:"image/jpeg",A:"image/gif",M:"image/tiff",L:"image/svg+xml",O:"image/webp"};function N(a){return(a=/\.([^./]*?)$/g.exec(a))?a[1]:""};function O(a){return t(function*(){var b=a.toDataURL();return b==="data:,"?a.cloneNode(!1):B(b)})}function aa(a,b){return t(function*(){if(a.currentSrc){var d=document.createElement("canvas");let c=d.getContext("2d");d.width=a.clientWidth;d.height=a.clientHeight;c==null||c.drawImage(a,0,0,d.width,d.height);d=d.toDataURL();return B(d)}d=a.poster;d=yield L(d,M[N(d).toLowerCase()]||"",b);return B(d)})}
+function ba(a,b){return t(function*(){try{let d;if(a==null?0:(d=a.contentDocument)==null?0:d.body)return yield P(a.contentDocument.body,b,!0)}catch(d){}return a.cloneNode(!1)})}function ca(a,b){return t(function*(){return E(a,HTMLCanvasElement)?O(a):E(a,HTMLVideoElement)?aa(a,b):E(a,HTMLIFrameElement)?ba(a,b):a.cloneNode(a.tagName!=null&&a.tagName.toUpperCase()==="SVG")})}
+function da(a,b,d){return t(function*(){if(b.tagName!=null&&b.tagName.toUpperCase()==="SVG")return b;var c=[];if(a.tagName!=null&&a.tagName.toUpperCase()==="SLOT"&&a.assignedNodes)c=w(a.assignedNodes());else{let e;if(E(a,HTMLIFrameElement)&&((e=a.contentDocument)==null?0:e.body))c=w(a.contentDocument.body.childNodes);else{let f;c=w(((f=a.shadowRoot)!=null?f:a).childNodes)}}if(c.length===0||E(a,HTMLVideoElement))return b;yield c.reduce((e,f)=>e.then(()=>P(f,d)).then(g=>{g&&b.appendChild(g)}),Promise.resolve());
+return b})}function ea(a,b,d){var c=b.style;if(c){var e=window.getComputedStyle(a);e.cssText?(c.cssText=e.cssText,c.transformOrigin=e.transformOrigin):y(d).forEach(f=>{var g=e.getPropertyValue(f);f==="font-size"&&g.endsWith("px")&&(g=`${Math.floor(parseFloat(g.substring(0,g.length-2)))-.1}px`);E(a,HTMLIFrameElement)&&f==="display"&&g==="inline"&&(g="block");f==="d"&&b.getAttribute("d")&&(g=`path(${b.getAttribute("d")})`);c.setProperty(f,g,e.getPropertyPriority(f))})}}
+function fa(a,b){E(a,HTMLSelectElement)&&(b=Array.from(b.children).find(d=>a.value===d.getAttribute("value")))&&b.setAttribute("selected","")}
+function ha(a,b){return t(function*(){var d=a.querySelectorAll?a.querySelectorAll("use"):[];if(d.length===0)return a;var c={};for(var e=0;e<d.length;e++){var f=d[e].getAttribute("xlink:href");if(f){let g=document.querySelector(f);a.querySelector(f)||!g||c[f]||(c[f]=yield P(g,b,!0))}}d=Object.values(c);if(d.length){c=document.createElementNS("http://www.w3.org/1999/xhtml","svg");c.setAttribute("xmlns","http://www.w3.org/1999/xhtml");c.style.position="absolute";c.style.width="0";c.style.height="0";
+c.style.overflow="hidden";c.style.display="none";e=document.createElementNS("http://www.w3.org/1999/xhtml","defs");c.appendChild(e);for(f=0;f<d.length;f++)e.appendChild(d[f]);a.appendChild(c)}return a})}
+function P(a,b,d){return t(function*(){return d||!b.filter||b.filter(a)?Promise.resolve(a).then(c=>ca(c,b)).then(c=>da(a,c,b)).then(c=>{E(c,Element)&&(ea(a,c,b),G(a,c,":before",b),G(a,c,":after",b),E(a,HTMLTextAreaElement)&&(c.textContent=a.value),E(a,HTMLInputElement)&&c.setAttribute("value",a.value),fa(a,c));return c}).then(c=>ha(c,b)):null})};const Q=/url\((['"]?)([^'"]+?)\1\)/g,ia=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,ja=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ka(a){var b=[];a.replace(Q,(d,c,e)=>{b.push(e);return d});return b.filter(d=>!H(d))}
+function la(a,b,d,c){return t(function*(){try{let e=d?(new URL(b,d||void 0)).toString():b,f;f=yield L(e,M[N(b).toLowerCase()]||"",c);return a.replace(new RegExp(`(url\\(['"]?)(${b.replace(/([.*+?^${}()|\[\]\/\\])/g,"\\$1")})(['"]?\\))`,"g"),`$1${f}$3`)}catch(e){}return a})}function ma(a,{I:b}){return b?a.replace(ja,d=>{for(;;){let [c,,e]=ia.exec(d)||[];if(!e)return"";if(e===b)return`src: ${c};`}}):a}
+function R(a,b,d){return t(function*(){if(a.search(Q)===-1)return a;var c=ma(a,d);return ka(c).reduce((e,f)=>e.then(g=>la(g,f,b,d)),Promise.resolve(c))})};function S(a,b,d){return t(function*(){var c,e=(c=b.style)==null?void 0:c.getPropertyValue(a);return e?(c=yield R(e,null,d),b.style.setProperty(a,c,b.style.getPropertyPriority(a)),!0):!1})}function na(a,b){return t(function*(){(yield S("background",a,b))||(yield S("background-image",a,b));(yield S("mask",a,b))||(yield S("-webkit-mask",a,b))||(yield S("mask-image",a,b))||(yield S("-webkit-mask-image",a,b))})}
+function oa(a,b){return t(function*(){var d=E(a,HTMLImageElement);if(d&&!H(a.src)||E(a,SVGImageElement)&&!H(a.href.baseVal)){var c=d?a.src:a.href.baseVal,e=yield L(c,M[N(c).toLowerCase()]||"",b);yield new Promise((f,g)=>{a.onload=f;a.onerror=b.m?(...k)=>{try{f(b.m(...k))}catch(m){g(m)}}:g;a.decode&&(a.decode=f);a.loading==="lazy"&&(a.loading="eager");d?(a.srcset="",a.src=e):a.href.baseVal=e})}})}
+function pa(a,b){return t(function*(){var d=w(a.childNodes).map(c=>T(c,b));yield Promise.all(d).then(()=>a)})}function T(a,b){return t(function*(){E(a,Element)&&(yield na(a,b),yield oa(a,b),yield pa(a,b))})};const U={};function V(a){return t(function*(){var b=U[a];if(b!=null)return b;b=yield(yield fetch(a)).text();b={url:a,cssText:b};return U[a]=b})}function W(a,b){return t(function*(){var d=a.cssText,c=/url\(["']?([^"')]+)["']?\)/g,e=(d.match(/url\([^)]+\)/g)||[]).map(f=>t(function*(){var g=f.replace(c,"$1");g.startsWith("https://")||(g=(new URL(g,a.url)).href);return I(g,b.i,({result:k})=>{d=d.replace(f,`url(${k})`);return[f,k]})}));return Promise.all(e).then(()=>d)})}
+function X(a){if(a==null)return[];var b=[];a=a.replace(/(\/\*[\s\S]*?\*\/)/gi,"");for(var d=RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})","gi");;){var c=d.exec(a);if(c===null)break;b.push(c[0])}a=a.replace(d,"");d=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;for(c=RegExp("((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})","gi");;){let e=d.exec(a);if(e===null)if(e=c.exec(a),e===null)break;else d.lastIndex=c.lastIndex;else c.lastIndex=
+d.lastIndex;b.push(e[0])}return b}
+function qa(a,b){return t(function*(){var d=[],c=[];a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach((f,g)=>{if(f.type===CSSRule.IMPORT_RULE){let k=g+1;f=V(f.href).then(m=>W(m,b)).then(m=>X(m).forEach(q=>{try{e.insertRule(q,q.startsWith("@import")?k+=1:e.cssRules.length)}catch(Da){}})).catch(()=>{});c.push(f)}})}catch(f){let g=a.find(k=>k.href==null)||document.styleSheets[0];e.href!=null&&c.push(V(e.href).then(k=>W(k,b)).then(k=>X(k).forEach(m=>{g.insertRule(m,g.cssRules.length)})).catch(()=>
+{}))}});return Promise.all(c).then(()=>{a.forEach(e=>{if("cssRules"in e)try{w(e.cssRules||[]).forEach(f=>{d.push(f)})}catch(f){}});return d})})}function ra(a){return a.filter(b=>b.type===CSSRule.FONT_FACE_RULE).filter(b=>b.style.getPropertyValue("src").search(Q)!==-1)}function sa(a,b){return t(function*(){if(a.ownerDocument==null)throw Error("Provided element is not within a Document");var d=w(a.ownerDocument.styleSheets);d=yield qa(d,b);return ra(d)})}
+function ta(a){function b(c){(c.style.fontFamily||getComputedStyle(c).fontFamily).split(",").forEach(e=>{d.add(e.trim().replace(/["']/g,""))});Array.from(c.children).forEach(e=>{e instanceof HTMLElement&&b(e)})}var d=new Set;b(a);return d}function ua(a,b){return t(function*(){var d=yield sa(a,b),c=ta(a);return(yield Promise.all(d.filter(e=>c.has(e.style.fontFamily.trim().replace(/["']/g,""))).map(e=>R(e.cssText,e.parentStyleSheet?e.parentStyleSheet.href:null,b)))).join("\n")})}
+function va(a,b){return t(function*(){var d=b.j!=null?b.j:b.K?null:yield ua(a,b);if(d){let c=document.createElement("style");c.appendChild(document.createTextNode(d));a.firstChild?a.insertBefore(c,a.firstChild):a.appendChild(c)}})};function wa(a,b={}){return t(function*(){var {width:d,height:c}=A(a,b),e=yield P(a,b,!0);yield va(e,b);yield T(e,b);u(e,b);return yield D(e,d,c)})}
+function xa(a,b={}){return t(function*(){var {width:d,height:c}=A(a,b),e=yield wa(a,b);e=yield B(e);var f=document.createElement("canvas"),g=f.getContext("2d"),k=b.G||window.devicePixelRatio||1,m=b.h||d,q=b.g||c;f.width=m*k;f.height=q*k;!b.J&&(f.width>16384||f.height>16384)&&(f.width>16384&&f.height>16384?f.width>f.height?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384):f.width>16384?(f.height*=16384/f.width,f.width=16384):(f.width*=16384/f.height,f.height=16384));
+f.style.width=`${m}`;f.style.height=`${q}`;b.backgroundColor&&(g.fillStyle=b.backgroundColor,g.fillRect(0,0,f.width,f.height));g.drawImage(e,0,0,f.width,f.height);return f})}function ya(a,b={}){return t(function*(){return(yield xa(a,b)).toDataURL()})};const za=["gemini.google.com","corp.google.com","proxy.googlers.com"];function Y(){return document.body.querySelectorAll('[class*="animate"]').length>0}function Z(a){return t(function*(){try{return yield ya(a,{h:a.offsetWidth,g:a.offsetHeight})}catch(d){var b=a.offsetHeight;let c=document.createElement("canvas");c.width=a.offsetWidth;c.height=b;return c.toDataURL("image/png")}})}
+function Aa(){return t(function*(){var a=document.body.offsetWidth,b=document.body.offsetHeight,d=document.body.cloneNode(!0);d.querySelectorAll('[class*="animate"]').forEach(c=>{c.classList.remove(...Array.from(c.classList).filter(e=>e.startsWith("animate")))});d.style.width=`${a}px`;d.style.height=`${b}px`;return d})}
+function Ba(a){return t(function*(){var b=document.body;if(Y()){var d=yield Aa();b=d;document.body.appendChild(d)}d=yield Z(b);Y()&&document.body.removeChild(b);window.parent.postMessage({type:"SEND_SCREENSHOT",image:d,topOffset:document.documentElement.scrollTop},a.origin)})}function Ca(a){return t(function*(){var b={type:"SEND_SCREENSHOT_FOR_DATA_VISUALIZATION",image:yield Z(document.body),topOffset:0};window.parent.postMessage(b,a.origin)})}
+window.addEventListener("message",a=>t(function*(){if(za.some(d=>a.origin.includes(d))){var b=a.data;b&&(b.type==="MAKE_SCREENSHOT"&&(yield Ba(a)),b.type==="MAKE_SCREENSHOT_FOR_DATA_VISUALIZATION"&&(yield Ca(a)))}}));
+})();</script><script data-bard-injected="true">(function() {
+  // Ensure this script is executed only once
+  if (window.firebaseAuthBridgeScriptLoaded) {
+    return;
+  }
+  window.firebaseAuthBridgeScriptLoaded = true;
+
+  let nextTokenPromiseId = 0;
+
+  // Stores { resolve, reject } for ongoing token requests
+  const pendingTokenPromises = {};
+
+  // Listen for messages from the Host Application
+  window.addEventListener('message', function(event) {
+
+    const messageData = event.data;
+
+  if (messageData && messageData.type === 'RESOLVE_NEW_FIREBASE_TOKEN') {
+      const { success, token, error, promiseId } = messageData ?? {};
+      if (pendingTokenPromises[promiseId]) {
+        if (success) {
+          pendingTokenPromises[promiseId].resolve(token);
+        } else {
+          pendingTokenPromises[promiseId].reject(new Error(error || 'Token refresh failed from host.'));
+        }
+        delete pendingTokenPromises[promiseId];
+      }
+    }
+  });
+
+  // Expose a function for the Generated App to request a new Firebase token
+  window.requestNewFirebaseToken = function() {
+    const currentPromiseId = nextTokenPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingTokenPromises[currentPromiseId] = { resolve, reject };
+    });
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({
+        type: 'REQUEST_NEW_FIREBASE_TOKEN',
+        promiseId: currentPromiseId
+      }, '*');
+    } else {
+      pendingTokenPromises[currentPromiseId].reject(new Error('No parent window to request token from.'));
+      delete pendingTokenPromises[currentPromiseId];
+    }
+    return promise;
+  };
+})();</script><script data-bard-injected="true">
+let realOriginalGetUserMedia = null;
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  realOriginalGetUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+}
+
+(function() {
+  if (navigator.mediaDevices && navigator.mediaDevices.__proto__) {
+    try {
+      Object.defineProperty(navigator.mediaDevices.__proto__, 'getUserMedia', {
+        get: function() {
+          return undefined; // Or throw an error
+        },
+        configurable: false
+      });
+    } catch (error) {
+      console.error("Error defining prototype getter:", error);
+    }
+  }
+})();
+
+(function() {
+  const pendingMediaResolvers = {};
+  let nextMediaPromiseId = 0;
+
+  function requestMediaPermissions(constraints) {
+    const mediaPromiseId = nextMediaPromiseId++;
+    const promise = new Promise((resolve, reject) => {
+      pendingMediaResolvers[mediaPromiseId] = (granted) => {
+        delete pendingMediaResolvers[mediaPromiseId];
+        resolve(granted);
+      };
+    });
+
+    window.parent.postMessage({
+      type: 'requestMediaPermission',
+      constraints: constraints,
+      promiseId: mediaPromiseId,
+    }, '*');
+
+    return promise;
+  }
+
+  let originalGetUserMedia = realOriginalGetUserMedia;
+
+  function interceptGetUserMedia() {
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+        value: function(constraints) {
+          return requestMediaPermissions(constraints).then((granted) => {
+            if (granted) {
+              if (originalGetUserMedia) {
+                return originalGetUserMedia(constraints);
+              } else {
+                throw new Error("Original getUserMedia not available.");
+              }
+            } else {
+              throw new DOMException('Permission denied', 'NotAllowedError');
+            }
+          });
+        },
+        writable: false,
+        configurable: false
+      });
+    }
+  }
+
+  interceptGetUserMedia();
+
+  const observer = new MutationObserver(function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'reconfigured' && mutation.name === 'getUserMedia' && mutation.object === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'attributes' && mutation.attributeName === 'getUserMedia' && mutation.target === navigator.mediaDevices) {
+        interceptGetUserMedia();
+      } else if (mutation.type === 'childList' && mutation.addedNodes) {
+        mutation.addedNodes.forEach(node => {
+          if (node === navigator.mediaDevices) {
+            interceptGetUserMedia();
+          }
+        });
+      }
+    }
+  });
+
+  function interceptSpeechRecognition() {
+    if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+      return;
+    }
+
+    const OriginalSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const SpeechRecognitionWrapper = function(...args) {
+      const recognizer = new OriginalSpeechRecognition(...args);
+      const originalStart = recognizer.start.bind(recognizer);
+
+      recognizer.start = function() {
+        requestMediaPermissions({ audio: true }).then(granted => {
+          if (granted) {
+            originalStart();
+          } else {
+            const errorEvent = new SpeechRecognitionErrorEvent('error');
+            errorEvent.error = 'not-allowed'; // This is the standard error for permission denial.
+            recognizer.dispatchEvent(errorEvent);
+          }
+        });
+      };
+
+      return recognizer;
+    };
+
+    SpeechRecognitionWrapper.prototype = OriginalSpeechRecognition.prototype;
+    SpeechRecognitionWrapper.prototype.constructor = SpeechRecognitionWrapper;
+
+    if (window.SpeechRecognition) {
+      window.SpeechRecognition = SpeechRecognitionWrapper;
+    }
+    if (window.webkitSpeechRecognition) {
+      window.webkitSpeechRecognition = SpeechRecognitionWrapper;
+    }
+  }
+
+  interceptSpeechRecognition();
+
+  window.addEventListener('message', function(event) {
+    if (event.data) {
+      if (event.data.type === 'resolveMediaPermission') {
+        const { promiseId, granted } = event.data;
+        if (pendingMediaResolvers[promiseId]) {
+          pendingMediaResolvers[promiseId](granted);
+        }
+      }
+    }
+  });
+
+})();</script><script ws-interception-config="{&quot;parentOrigin&quot;:&quot;https://gemini.google.com&quot;,&quot;proxiedDomains&quot;:[]}" data-bard-injected="true">(function(){'use strict';var u=typeof Object.defineProperties=="function"?Object.defineProperty:function(b,d,e){if(b==Array.prototype||b==Object.prototype)return b;b[d]=e.value;return b};function v(b){b=["object"==typeof globalThis&&globalThis,b,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var d=0;d<b.length;++d){var e=b[d];if(e&&e.Math==Math)return e}throw Error("Cannot find global object");}var w=v(this);
+function y(b,d){if(d)a:{var e=w;b=b.split(".");for(var h=0;h<b.length-1;h++){var k=b[h];if(!(k in e))break a;e=e[k]}b=b[b.length-1];h=e[b];d=d(h);d!=h&&d!=null&&u(e,b,{configurable:!0,writable:!0,value:d})}}function z(b){function d(h){return b.next(h)}function e(h){return b.throw(h)}return new Promise(function(h,k){function m(n){n.done?h(n.value):Promise.resolve(n.value).then(d,e).then(m,k)}m(b.next())})}y("globalThis",function(b){return b||w});/*
+
+ Copyright The Closure Library Authors.
+ SPDX-License-Identifier: Apache-2.0
+*/
+function A(b,d){function e(){}e.prototype=d.prototype;b.i=d.prototype;b.prototype=new e;b.prototype.constructor=b;b.g=function(h,k,m){for(var n=Array(arguments.length-2),p=2;p<arguments.length;p++)n[p-2]=arguments[p];return d.prototype[k].apply(h,n)}};function B(b,d,e="*"){function h(a){if(typeof a==="string")return F.encode(a).buffer;if(a instanceof ArrayBuffer)return a.slice(0);if(ArrayBuffer.isView(a))return a.buffer.slice(a.byteOffset,a.byteOffset+a.byteLength);throw Error("Invalid data type");}function k(a){a=h(a);var f={type:"send",data:new Uint8Array(a)},g;(g=r)==null||g.postMessage(f,[a])}function m(){if(!r)throw Error("Data port not captured yet.");r.onmessage=a=>{if(a.data.type==="message"){a=new MessageEvent("message",{data:G.decode(a.data.data)});
+let f;(f=c.onmessage)==null||f.call(c,a);c.dispatchEvent(a)}}}function n(){if(!t)throw Error("Control port not captured yet.");t.onmessage=a=>{switch(a.data.type){case "open":l=1;var f=new Event("open"),g;(g=c.onopen)==null||g.call(c,f);c.dispatchEvent(f);q.forEach(H=>{k(H)});q=[];break;case "close":g=a.data;l=3;g=new CloseEvent("close",{code:g.code,reason:g.reason,wasClean:g.wasClean});(f=c.onclose)==null||f.call(c,g);c.dispatchEvent(g);break;case "error":l=3;f=new Event("error");let x;(x=c.onerror)==
+null||x.call(c,f);c.dispatchEvent(f)}}}function p(a){return z(function*(){var f=new MessageChannel;t=f.port1;var g=new MessageChannel;r=g.port1;n();m();window.parent.postMessage({type:"websocket_open",portOrdering:["control","data"],url:b,protocols:a||[],connectionId:I},e,[f.port2,g.port2])}())}var c=Reflect.construct(EventTarget,[],new.target);c.CONNECTING=0;c.OPEN=1;c.CLOSING=2;c.CLOSED=3;c.url=b;c.binaryType="arraybuffer";c.protocol="";c.h="";var l=0,t=null,r=null,q=[],F=new TextEncoder,G=new TextDecoder;
+c.onopen=null;c.onmessage=null;c.onclose=null;c.onerror=null;Object.defineProperty(c,"readyState",{get:()=>l,enumerable:!0,configurable:!0});Object.defineProperty(c,"bufferedAmount",{get:()=>{var a=0;q.forEach(f=>{a+=typeof f==="string"?f.length:f.byteLength});return a},enumerable:!0,configurable:!0});var I=function(){var a;return((a=globalThis.crypto)==null?0:a.randomUUID)?globalThis.crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,f=>{var g=Math.random()*16|0;return(f===
+"x"?g:g&3|8).toString(16)})}();c.send=a=>{if(l===1)a instanceof Blob?a.arrayBuffer().then(f=>{k(f)}):k(a);else if(l===0)if(typeof a==="string")q.push(a);else if(a instanceof ArrayBuffer||ArrayBuffer.isView(a))q.push(h(a));else throw Error("Sending Blob is not supported before the connection is open.");else console.debug("WebSocket send called in CLOSING or CLOSED state; ignored.")};c.close=(a=1E3,f="")=>{if(l!==2&&l!==3){l=2;a={type:"close",code:a,reason:f,wasClean:a===1E3};var g;(g=t)==null||g.postMessage(a)}};
+Promise.resolve().then(()=>p(d));return c}A(B,EventTarget);var C=document.currentScript,D=C==null?void 0:C.getAttribute("ws-interception-config");if(!D)throw Error("WebSocket Interceptor: Missing ws-interception-config attribute in the script tag.");var E=JSON.parse(D);if(!E.parentOrigin||typeof E.parentOrigin!=="string")throw Error("WebSocket Interceptor: Invalid parentOrigin in ws-interception-config");
+(function(b){var d=Object.getOwnPropertyDescriptor(window,"WebSocket");if(!d||d.writable||d.configurable)d=Object.assign(function(e,h){try{let k=(new URL(e)).hostname;if(b.proxiedDomains.some(m=>k===m||k.endsWith(`.${m}`)))return new B(e,h,b.parentOrigin)}catch(k){throw window.parent.postMessage({type:"websocket_blocked",url:e,reason:"blocked_invalid_url"},b.parentOrigin),new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");}window.parent.postMessage({type:"websocket_blocked",
+url:e,reason:"blocked_domain_not_allowlisted"},b.parentOrigin);throw new DOMException(`WebSocket connection to '${e}' is not allowed in Canvas.`,"SecurityError");},{CONNECTING:0,OPEN:1,CLOSING:2,CLOSED:3}),Object.defineProperty(window,"WebSocket",{value:d,writable:!1,configurable:!1})})({proxiedDomains:E.proxiedDomains||[],parentOrigin:E.parentOrigin});}).call(this);
+</script><script data-bard-injected="true">((function(modelInformation) {
+  const originalFetch = window.fetch;
+  // TODO: b/421908508 - Move these out of the script and match all generative AI model calls.
+  let googleLlmBaseApiUrls = [
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':streamGenerateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.textModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageEditModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.imageTransformModelName + ':generateContent',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predict',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.videoModelName + ':predictLongRunning',
+    'https://generativelanguage.googleapis.com/v1beta/models/' + modelInformation.ttsModelName + ':generateContent',
+  ];
+  modelInformation.deprecatedTextModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+    );
+  });
+  modelInformation.deprecatedImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predict',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':predictLongRunning',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+  modelInformation.deprecatedGenerateImageModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+  modelInformation.deprecatedImageTransformModelNames.forEach((modelName) => {
+    googleLlmBaseApiUrls.push(
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':generateContent',
+      'https://generativelanguage.googleapis.com/v1beta/models/' + modelName + ':streamGenerateContent',
+    );
+  });
+
+  const pendingFetchResolvers = {};
+  let nextPromiseId = 0;
+
+  function handleStringInput(input, optionsArgument) {
+    const actualUrl = input;
+    const fetchCallArgs = [actualUrl, optionsArgument];
+    const effectiveOptions = optionsArgument || {};
+    const bodyForApiKeyCheck = effectiveOptions.body;
+    const bodyForPostMessage = effectiveOptions.body;
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  function handleRequestInput(input, optionsArgument) {
+    const actualUrl = input.url;
+    const fetchCallArgs = [input, optionsArgument];
+    const effectiveOptions = { method: input.method, headers: new Headers(input.headers) };
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (optionsArgument) {
+      if (optionsArgument.method) effectiveOptions.method = optionsArgument.method;
+      if (optionsArgument.headers) effectiveOptions.headers = new Headers(optionsArgument.headers);
+      if ('body' in optionsArgument) {
+        bodyForApiKeyCheck = optionsArgument.body;
+        bodyForPostMessage = optionsArgument.body;
+      } else {
+        bodyForApiKeyCheck = undefined;
+        bodyForPostMessage = input.body;
+      }
+    } else {
+      bodyForApiKeyCheck = undefined;
+      bodyForPostMessage = input.body;
+    }
+    return { actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage };
+  }
+
+  window.fetch = function(input, optionsArgument) {
+    let actualUrl;
+    let fetchCallArgs;
+    let effectiveOptions = {};
+    let bodyForApiKeyCheck;
+    let bodyForPostMessage;
+
+    if (typeof input === 'string') {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleStringInput(input, optionsArgument));
+    } else if (input instanceof Request) {
+      ({actualUrl, fetchCallArgs, effectiveOptions, bodyForApiKeyCheck, bodyForPostMessage} = handleRequestInput(input, optionsArgument));
+    } else {
+      return originalFetch.apply(window, [input, optionsArgument]);
+    }
+
+    effectiveOptions.method = effectiveOptions.method || 'GET';
+    if (!effectiveOptions.headers) {
+      effectiveOptions.headers = new Headers();
+    }
+
+
+    if (typeof actualUrl === 'string' && googleLlmBaseApiUrls.some((url) => actualUrl.startsWith(url))) {
+      let apiKeyIsNull = true;
+
+      const regex = new RegExp("models/([^:]+)");
+      const modelNameMatch = actualUrl.match(regex);
+      const modelName = modelNameMatch ? modelNameMatch[1] : 'unspecified';
+
+
+      try {
+        const urlObject = new URL(actualUrl);  // Use URL object for robust parsing
+        const apiKeyParam = urlObject.searchParams.get('key');
+        if (apiKeyParam) {
+          apiKeyIsNull = false;
+        }
+      } catch (e) {
+        // Continue checks even if URL parsing fails
+      }
+
+      if (apiKeyIsNull && effectiveOptions.headers) {
+        const h = new Headers(effectiveOptions.headers);
+        const apiKeyHeaderValue = h.get('X-API-Key') || h.get('x-api-key');
+        if (apiKeyHeaderValue) {
+          apiKeyIsNull = false;
+          return originalFetch.apply(window, fetchCallArgs);
+        }
+      }
+
+      if (apiKeyIsNull && effectiveOptions.method && ['POST', 'PUT', 'PATCH'].includes(effectiveOptions.method.toUpperCase()) && typeof bodyForApiKeyCheck === 'string') {
+        try {
+          const bodyData = JSON.parse(bodyForApiKeyCheck);
+          if (bodyData && bodyData.apiKey) {
+            apiKeyIsNull = false;
+            return originalFetch.apply(window, fetchCallArgs);
+          }
+        } catch (e) {
+          // Ignore JSON parsing errors
+        }
+      }
+
+      if(apiKeyIsNull) {
+        const promiseId = nextPromiseId++;
+        const promise = new Promise((resolve) => {
+          pendingFetchResolvers[promiseId] = (resolvedResponse) => {
+            delete pendingFetchResolvers[promiseId];
+            resolve(resolvedResponse);
+          };
+        });
+
+        let serializedBodyForPostMessage;
+        if (typeof bodyForPostMessage === 'string' || bodyForPostMessage == null) {
+            serializedBodyForPostMessage = bodyForPostMessage;
+        } else if (bodyForPostMessage instanceof ReadableStream) {
+            serializedBodyForPostMessage = null;
+        } else {
+            try {
+                serializedBodyForPostMessage = JSON.stringify(bodyForPostMessage);
+            } catch (e) {
+                serializedBodyForPostMessage = null;
+            }
+        }
+
+        const messageOptions = {
+            method: effectiveOptions.method,
+            headers: Object.fromEntries(new Headers(effectiveOptions.headers).entries()),
+            body: serializedBodyForPostMessage
+        };
+
+        window.parent.postMessage({
+          type: 'requestFetch',
+          url: actualUrl,
+          modelName: modelName,
+          options: messageOptions,
+          promiseId: promiseId,
+        }, '*');
+
+        return promise;
+      }
+      return originalFetch.apply(window, fetchCallArgs);
+    }
+    return originalFetch.apply(window, fetchCallArgs);
+  };
+
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'resolveFetch') {
+      const { promiseId, response } = event.data;
+      if (pendingFetchResolvers[promiseId]) {
+        try {
+          const reconstructedResponse = new Response(response.body, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: new Headers(response.headers),
+          });
+          pendingFetchResolvers[promiseId](reconstructedResponse);
+        } catch (error) {
+          pendingFetchResolvers[promiseId](new Response(null, { status: 500, statusText: "Interceptor Response Reconstruction Error" }));
+        }
+      }
+    }
+  });
+
+}))({"textModelName":"gemini-3-flash-preview","imageModelName":"imagen-4.0-generate-001","imageEditModelName":"gemini-3.1-flash-image","imageTransformModelName":"gemini-3-pro-image-preview-11-2025","videoModelName":"veo-2.0-generate-001","ttsModelName":"gemini-2.5-flash-preview-tts","deprecatedTextModelNames":["gemini-2.0-flash","gemini-2.5-flash","gemini-2.5-flash-preview-04-17","gemini-2.5-flash-preview-05-20","gemini-2.5-flash-preview-09-2025"],"deprecatedImageModelNames":["imagen-3.0-generate-001","imagen-3.0-generate-002"],"deprecatedGenerateImageModelNames":["gemini-2.5-flash-image-preview","gemini-2.5-flash-image","gemini-3.1-flash-image-preview"],"deprecatedImageTransformModelNames":[]})</script><script data-bard-injected="true">(function(){'use strict';function a(){window.parent.postMessage({type:"interaction"},"*")}window.addEventListener("click",a,{capture:!0,passive:!0});window.addEventListener("touchstart",a,{capture:!0,passive:!0});window.addEventListener("keydown",a,{capture:!0,passive:!0});}).call(this);
+</script><script data-bard-injected="true">(function() {
+  const originalConsoleLog = console.log;
+  const originalConsoleError = console.error;
+
+    /**
+   * Normalizes an error event or a promise rejection reason into a structured error object.
+   * @param {*} errorEventOrReason The error object or reason.
+   * @return {object} Structured error data { message, name, stack }.
+   */
+  function getErrorObject(errorEventOrReason) {
+    if (errorEventOrReason instanceof Error) {
+      return {
+        message: errorEventOrReason.message,
+        name: errorEventOrReason.name,
+        stack: errorEventOrReason.stack,
+      };
+    }
+    // Fallback for non-Error objects.
+    try {
+      return {
+        message: JSON.stringify(errorEventOrReason),
+        name: 'UnknownErrorType',
+        stack: null,
+      };
+    } catch (e) {
+      return {
+        message: String(errorEventOrReason),
+        name: 'UnknownErrorTypeNonStringifiable',
+        stack: null,
+      };
+    }
+  }
+
+  /**
+   * Converts an array of arguments (from log/error) into a single string.
+   * Handles Error objects specially to include their message and stack.
+   * @param {Array<*>} args - Arguments passed to console methods.
+   * @return {string} A string representation of the arguments.
+   */
+  function stringifyArgs(args) {
+    return args
+      .map((arg) => {
+        if (arg instanceof Error) {
+          const {message, stack} = arg;
+          return `Error: ${message}${stack ? ('\nStack: ' + stack) : ''}`;
+        }
+        if (typeof arg === 'object' && arg !== null) {
+          try {
+            return JSON.stringify(arg);
+          } catch (error) {
+            return '[Circular Object]';
+          }
+        } else {
+          return String(arg);
+        }
+      })
+      .join(' ');
+  }
+
+  console.log = function(...args) {
+    const logString = stringifyArgs(args);
+    window.parent.postMessage({ type: 'log', message: logString }, '*');
+    originalConsoleLog.apply(console, args);
+  };
+
+  console.error = function(...args) {
+    let errorData;
+    if (args.length > 0 && args[0] instanceof Error) {
+      const err = args[0];
+      // If the first arg is an Error, capture its details.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        ...getErrorObject(err),
+        rawArgsString: stringifyArgs(args.slice(1)),
+        timestamp: new Date().toISOString(),
+      };
+    } else {
+      // If not an Error object, treat all args as a general error message.
+      errorData = {
+        type: 'error',
+        source: 'CONSOLE_ERROR',
+        message: stringifyArgs(args),
+        name: 'ConsoleLoggedError',
+        stack: null,
+        timestamp: new Date().toISOString(),
+      };
+    }
+    window.parent.postMessage(errorData, '*');
+    originalConsoleError.apply(console, args);
+  };
+
+  // Listen for global unhandled synchronous errors.
+  window.addEventListener('error', function(event) {
+    const errorDetails = event.error ? getErrorObject(event.error) : {
+      message: event.message,
+      name: 'GlobalError',
+      stack: null,
+      filename: event.filename,
+      lineno: event.lineno,
+      colno: event.colno,
+    };
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'global',
+      ...errorDetails,
+      message: errorDetails.message || event.message,
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+  // Listen for unhandled promise rejections (asynchronous errors).
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorDetails = getErrorObject(event.reason);
+
+    window.parent.postMessage({
+      type: 'error',
+      source: 'unhandledrejection',
+      ...errorDetails,
+      message: errorDetails.message || 'Unhandled Promise Rejection',
+      timestamp: new Date().toISOString(),
+    }, '*');
+  });
+
+})();</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta Digital Legal - Derecho Laboral y Seguridad Social</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Selección tipográfica de prestigio institucional y alta legibilidad -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;850&amp;family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&amp;family=Poppins:wght@300;400;500;600;700;800;900&amp;family=Roboto:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+    <!-- Font Awesome para Iconografía Técnica Legal -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Alpine.js para Reactividad Instantánea y Sincronización en Tiempo Real -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer="" crossorigin="anonymous"></script>
+    
+    <style>
+        /* Animaciones fluidas para emular un entorno de tecnología jurídica de vanguardia */
+        @keyframes techOrbit {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .tech-ring { animation: techOrbit 20s linear infinite; }
+        .tech-ring-reverse { animation: techOrbit 12s linear infinite reverse; }
+
+        .interactive-element { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .interactive-element:hover { transform: translateY(-4px) scale(1.025); }
+        
+        body.modal-open { overflow: hidden; }
+
+        /* Temas de Color de Alto Prestigio */
+        /* TEMA EMERALD (Estabilidad de Fondos de Pensiones, Cesantías y Seguridad Social) */
+        .theme-emerald .card-glow { box-shadow: 0 0 35px rgba(16, 185, 129, 0.25), inset 0 0 15px rgba(16, 185, 129, 0.08); border: 2.5px solid rgba(16, 185, 129, 0.75); }
+        .theme-emerald .animated-border { animation: pulseEmerald 4s infinite; }
+        @keyframes pulseEmerald { 0%, 100% { border-color: rgba(16,185,129,0.55); box-shadow: 0 0 20px rgba(16,185,129,0.2); } 50% { border-color: rgba(52,211,153,0.85); box-shadow: 0 0 40px rgba(52,211,153,0.4); } }
+
+        /* TEMA GOLD (Oro Jurídico e Institucional) */
+        .theme-gold .card-glow { box-shadow: 0 0 35px rgba(217, 119, 6, 0.25), inset 0 0 15px rgba(217, 119, 6, 0.08); border: 2.5px solid rgba(217, 119, 6, 0.75); }
+        .theme-gold .animated-border { animation: pulseGold 4s infinite; }
+        @keyframes pulseGold { 0%, 100% { border-color: rgba(217,119,6,0.55); box-shadow: 0 0 20px rgba(217,119,6,0.2); } 50% { border-color: rgba(251,191,36,0.85); box-shadow: 0 0 40px rgba(251,191,36,0.4); } }
+
+        /* TEMA BLUE (Derecho de Empresa / Seguridad Social Corporativa) */
+        .theme-blue .card-glow { box-shadow: 0 0 35px rgba(29, 78, 216, 0.25), inset 0 0 15px rgba(29, 78, 216, 0.08); border: 2.5px solid rgba(29, 78, 216, 0.75); }
+        .theme-blue .animated-border { animation: pulseBlue 4s infinite; }
+        @keyframes pulseBlue { 0%, 100% { border-color: rgba(29,78,216,0.55); box-shadow: 0 0 20px rgba(29,78,216,0.2); } 50% { border-color: rgba(96,165,250,0.85); box-shadow: 0 0 40px rgba(96,165,250,0.4); } }
+
+        /* TEMA RED (Litigantes y Defensores Combativos) */
+        .theme-red .card-glow { box-shadow: 0 0 35px rgba(185, 28, 28, 0.25), inset 0 0 15px rgba(185, 28, 28, 0.08); border: 2.5px solid rgba(185, 28, 28, 0.75); }
+        .theme-red .animated-border { animation: pulseRed 4s infinite; }
+        @keyframes pulseRed { 0%, 100% { border-color: rgba(185,28,28,0.55); box-shadow: 0 0 20px rgba(185,28,28,0.2); } 50% { border-color: rgba(248,113,113,0.85); box-shadow: 0 0 40px rgba(248,113,113,0.4); } }
+
+        /* Barra de desplazamiento refinada para el panel administrativo */
+        .admin-scroll::-webkit-scrollbar { width: 6px; }
+        .admin-scroll::-webkit-scrollbar-track { background: #0f172a; }
+        .admin-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border-width:0}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.-inset-1\.5{inset:-0.375rem}.-inset-2\.5{inset:-0.625rem}.inset-0{inset:0px}.bottom-2{bottom:0.5rem}.bottom-4{bottom:1rem}.left-1\/2{left:50%}.left-4{left:1rem}.right-2{right:0.5rem}.right-4{right:1rem}.top-1\/4{top:25%}.top-4{top:1rem}.top-2{top:0.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-40{z-index:40}.z-50{z-index:50}.z-\[100\]{z-index:100}.z-\[110\]{z-index:110}.mx-auto{margin-left:auto;margin-right:auto}.-mt-24{margin-top:-6rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-6{margin-bottom:1.5rem}.mr-1{margin-right:0.25rem}.mr-2{margin-right:0.5rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mt-3\.5{margin-top:0.875rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-0\.5{margin-top:0.125rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.h-12{height:3rem}.h-14{height:3.5rem}.h-16{height:4rem}.h-36{height:9rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-8{height:2rem}.h-\[500px\]{height:500px}.h-\[95vh\]{height:95vh}.h-full{height:100%}.h-screen{height:100vh}.h-auto{height:auto}.max-h-\[85vh\]{max-height:85vh}.min-h-screen{min-height:100vh}.w-1\/2{width:50%}.w-1\/3{width:33.333333%}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-36{width:9rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\[500px\]{width:500px}.w-full{width:100%}.w-10\/12{width:83.333333%}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.flex-grow{flex-grow:1}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-full{--tw-translate-x:-100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-x-0{--tw-translate-x:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.resize-none{resize:none}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-x-5{column-gap:1.25rem}.gap-y-5{row-gap:1.25rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-2{border-width:2px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-r{border-right-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-emerald-500{--tw-border-opacity:1;border-color:rgb(16 185 129 / var(--tw-border-opacity, 1))}.border-emerald-500\/30{border-color:rgb(16 185 129 / 0.3)}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-700\/80{border-color:rgb(51 65 85 / 0.8)}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-800\/40{border-color:rgb(30 41 59 / 0.4)}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42 / var(--tw-border-opacity, 1))}.border-emerald-500\/20{border-color:rgb(16 185 129 / 0.2)}.border-emerald-600{--tw-border-opacity:1;border-color:rgb(5 150 105 / var(--tw-border-opacity, 1))}.border-red-800\/30{border-color:rgb(153 27 27 / 0.3)}.border-amber-500\/20{border-color:rgb(245 158 11 / 0.2)}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6 / var(--tw-border-opacity, 1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105 / var(--tw-bg-opacity, 1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/50{background-color:rgb(15 23 42 / 0.5)}.bg-slate-900\/90{background-color:rgb(15 23 42 / 0.9)}.bg-slate-900\/95{background-color:rgb(15 23 42 / 0.95)}.bg-slate-950\/50{background-color:rgb(2 6 23 / 0.5)}.bg-slate-950\/80{background-color:rgb(2 6 23 / 0.8)}.bg-slate-950\/85{background-color:rgb(2 6 23 / 0.85)}.bg-slate-950\/95{background-color:rgb(2 6 23 / 0.95)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-900{--tw-bg-opacity:1;background-color:rgb(6 78 59 / var(--tw-bg-opacity, 1))}.bg-red-950\/60{background-color:rgb(69 10 10 / 0.6)}.bg-amber-500{--tw-bg-opacity:1;background-color:rgb(245 158 11 / var(--tw-bg-opacity, 1))}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.bg-amber-900{--tw-bg-opacity:1;background-color:rgb(120 53 15 / var(--tw-bg-opacity, 1))}.bg-opacity-10{--tw-bg-opacity:0.1}.bg-gradient-to-b{background-image:linear-gradient(to bottom, var(--tw-gradient-stops))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-tr{background-image:linear-gradient(to top right, var(--tw-gradient-stops))}.from-slate-800{--tw-gradient-from:#1e293b var(--tw-gradient-from-position);--tw-gradient-to:rgb(30 41 59 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-950\/30{--tw-gradient-from:rgb(2 6 23 / 0.3) var(--tw-gradient-from-position);--tw-gradient-to:rgb(2 6 23 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-white{--tw-gradient-from:#fff var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 255 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-emerald-500{--tw-gradient-from:#10b981 var(--tw-gradient-from-position);--tw-gradient-to:rgb(16 185 129 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-emerald-600{--tw-gradient-from:#059669 var(--tw-gradient-from-position);--tw-gradient-to:rgb(5 150 105 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-amber-500{--tw-gradient-from:#f59e0b var(--tw-gradient-from-position);--tw-gradient-to:rgb(245 158 11 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-amber-600{--tw-gradient-from:#d97706 var(--tw-gradient-from-position);--tw-gradient-to:rgb(217 119 6 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-slate-950\/60{--tw-gradient-to:rgb(2 6 23 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(2 6 23 / 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-teal-100{--tw-gradient-to:rgb(204 251 241 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #ccfbf1 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-teal-400{--tw-gradient-to:rgb(45 212 191 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #2dd4bf var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-teal-600{--tw-gradient-to:rgb(13 148 136 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #0d9488 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-amber-100{--tw-gradient-to:rgb(254 243 199 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fef3c7 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-yellow-500{--tw-gradient-to:rgb(234 179 8 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #eab308 var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-yellow-600{--tw-gradient-to:rgb(202 138 4 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #ca8a04 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-slate-900{--tw-gradient-to:#0f172a var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.to-emerald-400{--tw-gradient-to:#34d399 var(--tw-gradient-to-position)}.to-emerald-600{--tw-gradient-to:#059669 var(--tw-gradient-to-position)}.to-emerald-700{--tw-gradient-to:#047857 var(--tw-gradient-to-position)}.to-amber-400{--tw-gradient-to:#fbbf24 var(--tw-gradient-to-position)}.to-amber-600{--tw-gradient-to:#d97706 var(--tw-gradient-to-position)}.to-amber-700{--tw-gradient-to:#b45309 var(--tw-gradient-to-position)}.bg-cover{background-size:cover}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.bg-center{background-position:center}.bg-no-repeat{background-repeat:no-repeat}.object-cover{object-fit:cover}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-1\.5{padding:0.375rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-2{padding-bottom:0.5rem}.pb-2\.5{padding-bottom:0.625rem}.pb-4{padding-bottom:1rem}.pt-5{padding-top:1.25rem}.text-left{text-align:left}.text-center{text-align:center}.font-sans{font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[12px\]{font-size:12px}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-black{font-weight:900}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.italic{font-style:italic}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.tracking-\[0\.5em\]{letter-spacing:0.5em}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249 / var(--tw-text-opacity, 1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.opacity-20{opacity:0.2}.opacity-40{opacity:0.4}.opacity-55{opacity:0.55}.opacity-80{opacity:0.8}.mix-blend-multiply{mix-blend-mode:multiply}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-emerald-600\/30{--tw-shadow-color:rgb(5 150 105 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.shadow-amber-600\/30{--tw-shadow-color:rgb(217 119 6 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.outline-none{outline:2px solid transparent;outline-offset:2px}.blur-\[130px\]{--tw-blur:blur(130px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[3px\]{--tw-blur:blur(3px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-2xl{--tw-backdrop-blur:blur(40px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-\[8px\]{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-lg{--tw-backdrop-blur:blur(16px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.duration-500{transition-duration:500ms}.ease-in-out{transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1)}.after\:absolute::after{content:var(--tw-content);position:absolute}.after\:left-\[2px\]::after{content:var(--tw-content);left:2px}.after\:top-\[2px\]::after{content:var(--tw-content);top:2px}.after\:h-4::after{content:var(--tw-content);height:1rem}.after\:w-4::after{content:var(--tw-content);width:1rem}.after\:rounded-full::after{content:var(--tw-content);border-radius:9999px}.after\:border::after{content:var(--tw-content);border-width:1px}.after\:border-gray-300::after{content:var(--tw-content);--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.after\:bg-white::after{content:var(--tw-content);--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.after\:transition-all::after{content:var(--tw-content);transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.after\:content-\[\'\'\]::after{--tw-content:'';content:var(--tw-content)}.hover\:border-emerald-400\/50:hover{border-color:rgb(52 211 153 / 0.5)}.hover\:bg-red-900\/50:hover{background-color:rgb(127 29 29 / 0.5)}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.hover\:bg-red-900:hover{--tw-bg-opacity:1;background-color:rgb(127 29 29 / var(--tw-bg-opacity, 1))}.hover\:text-emerald-300:hover{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.hover\:text-red-400:hover{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:text-red-300:hover{--tw-text-opacity:1;color:rgb(252 165 165 / var(--tw-text-opacity, 1))}.focus\:border-emerald-500:focus{--tw-border-opacity:1;border-color:rgb(16 185 129 / var(--tw-border-opacity, 1))}.focus\:border-amber-500:focus{--tw-border-opacity:1;border-color:rgb(245 158 11 / var(--tw-border-opacity, 1))}.peer:checked ~ .peer-checked\:bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.peer:checked ~ .peer-checked\:after\:translate-x-full::after{content:var(--tw-content);--tw-translate-x:100%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.peer:checked ~ .peer-checked\:after\:border-white::after{content:var(--tw-content);--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}@media (min-width: 640px){.sm\:p-4{padding:1rem}}@media (min-width: 768px){.md\:h-\[860px\]{height:860px}.md\:w-\[420px\]{width:420px}.md\:max-w-sm{max-width:24rem}.md\:rounded-3xl{border-radius:1.5rem}.md\:p-8{padding:2rem}}</style></head>
+<body class="bg-slate-950 text-slate-100 min-h-screen overflow-x-hidden flex theme-gold" x-data="appData()" x-init="init()" :class="'theme-' + draftConfig.theme" :style="{ fontFamily: draftConfig.font }" style="font-family: Poppins;">
+
+    <!-- Botón discreto de Acceso Administrativo (Ubicado abajo a la izquierda para control de firma) -->
+    <button @click="loginModal = true" class="fixed bottom-4 left-4 z-50 w-12 h-12 rounded-full bg-slate-900/90 hover:bg-slate-800 border-2 text-slate-300 hover:text-white transition-all flex items-center justify-center backdrop-blur-md shadow-lg animate-bounce border-amber-600" :class="themeClasses.ring" title="Consola de Administración de la Tarjeta">
+        <i class="fa-solid fa-scale-balanced text-xl text-amber-500" :class="themeClasses.text"></i>
+    </button>
+
+    <!-- Modal de Validación del Abogado Administrador -->
+    <div x-show="loginModal" @keydown.escape.window="loginModal = false" class="fixed inset-0 bg-slate-950/95 backdrop-blur-lg flex items-center justify-center z-[100] p-4" x-transition.opacity="" style="display: none;">
+        <div @click.away="loginModal = false" class="bg-slate-900 rounded-2xl shadow-2xl w-full max-w-sm border border-slate-700 p-6 relative">
+            <button @click="loginModal = false" class="absolute top-4 right-4 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-slate-850 rounded-full flex items-center justify-center mx-auto mb-3 border border-slate-700 text-2xl text-amber-500" :class="themeClasses.text">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-xl font-bold">Portal de Configuración</h3>
+                <p class="text-xs text-slate-400 mt-1 font-sans">Escriba la clave maestra para habilitar la edición completa</p>
+            </div>
+            <div class="space-y-4 font-sans">
+                <div>
+                    <input type="password" x-model="passwordInput" @keydown.enter="authenticate()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-center text-lg tracking-[0.5em] outline-none transition-all focus:border-amber-500" :class="'focus:border-' + themeClasses.focusColor" placeholder="••••">
+                    <p x-show="loginError" class="text-red-500 text-xs text-center mt-2 font-semibold" style="display: none;">Código incorrecto (Clave por defecto: 1234)</p>
+                </div>
+                <button @click="authenticate()" class="w-full text-slate-950 font-black py-3 px-4 rounded-xl transition-all shadow-lg uppercase tracking-wider text-xs bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700" :class="themeClasses.gradientBtn">Acceder a la Consola</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL LATERAL ADMINISTRATIVO (Sincronizado en tiempo real) -->
+    <div x-show="isAdminMode" class="w-full md:w-[420px] h-screen bg-slate-900 border-r border-slate-800 flex flex-col shadow-2xl relative z-40 transition-all duration-300 font-sans shrink-0" x-transition:enter="transform transition ease-in-out duration-300" x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition ease-in-out duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full">
+        
+        <!-- Cabecera del Panel Admin -->
+        <div class="p-4 bg-slate-950 border-b border-slate-800 flex justify-between items-center shrink-0">
+            <div>
+                <h2 class="text-white font-bold text-base flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-amber-500" :class="themeClasses.text"></i>
+                    Consola de Edición
+                </h2>
+                <p class="text-[10px] text-slate-400">Personalización del Bufete Legal</p>
+            </div>
+            <button @click="logout()" class="text-xs bg-slate-800 hover:bg-red-900/50 hover:text-red-400 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition-colors"><i class="fa-solid fa-power-off mr-1"></i>Salir</button>
+        </div>
+
+        <!-- Formularios Desplazables del Dashboard en Acordeones -->
+        <div class="flex-grow overflow-y-auto admin-scroll p-4 space-y-4">
+            
+            <!-- ACORDEÓN 1: DISEÑO Y APARIENCIA -->
+            <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                <button @click="activeAccordion = activeAccordion === 1 ? null : 1" class="w-full p-3 bg-slate-900/50 flex justify-between items-center text-left border-b border-slate-800/40">
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-palette text-amber-500" :class="themeClasses.text"></i> Apariencia &amp; Diseño
+                    </span>
+                    <i class="fa-solid text-xs text-slate-400 fa-chevron-down" :class="activeAccordion === 1 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </button>
+                <div x-show="activeAccordion === 1" class="p-4 space-y-3" x-transition="" style="display: none;">
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Tema de Color del Bufete</label>
+                        <select x-model="draftConfig.theme" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                            <option value="emerald">Esmeralda (Seguridad Social, Pensiones &amp; Estabilidad)</option>
+                            <option value="gold">Oro / Ámbar (Institucional, Corporativo &amp; Tradición)</option>
+                            <option value="blue">Azul Imperial (Derecho de Empresa &amp; Defensa)</option>
+                            <option value="red">Carmesí / Rojo (Litigantes, Sindicatos &amp; Combate)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Fuente Tipográfica Principal</label>
+                        <select x-model="draftConfig.font" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                            <option value="Inter">Inter (Corporativa &amp; Minimalista Moderna)</option>
+                            <option value="Merriweather">Merriweather (Clásica, Solemne &amp; Académica)</option>
+                            <option value="Poppins">Poppins (Moderna, Amigable &amp; de Gran Legibilidad)</option>
+                            <option value="Roboto">Roboto (Versátil, Industrial &amp; Equilibrada)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN 2: INFORMACIÓN PRINCIPAL -->
+            <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                <button @click="activeAccordion = activeAccordion === 2 ? null : 2" class="w-full p-3 bg-slate-900/50 flex justify-between items-center text-left border-b border-slate-800/40">
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-id-card text-amber-500" :class="themeClasses.text"></i> Información de Perfil
+                    </span>
+                    <i class="fa-solid text-xs text-slate-400 fa-chevron-down" :class="activeAccordion === 2 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </button>
+                <div x-show="activeAccordion === 2" class="p-4 space-y-3" x-transition="" style="display: none;">
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Nombre del Bufete o Abogado</label>
+                        <input type="text" x-model="draftConfig.hero.name" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Especialidad Destacada</label>
+                        <input type="text" x-model="draftConfig.hero.subtitle" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Descripción de la Misión Legal</label>
+                        <textarea x-model="draftConfig.hero.description" rows="3" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none resize-none"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[10px] text-slate-400 font-bold uppercase">Título Cobertura</label>
+                            <input type="text" x-model="draftConfig.hero.coverage" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-2 py-2 outline-none">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-400 font-bold uppercase">Detalle Cobertura</label>
+                            <input type="text" x-model="draftConfig.hero.coverageSub" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-2 py-2 outline-none">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN 3: IMÁGENES -->
+            <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                <button @click="activeAccordion = activeAccordion === 3 ? null : 3" class="w-full p-3 bg-slate-900/50 flex justify-between items-center text-left border-b border-slate-800/40">
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-image text-amber-500" :class="themeClasses.text"></i> Recursos Visuales
+                    </span>
+                    <i class="fa-solid text-xs text-slate-400 fa-chevron-down" :class="activeAccordion === 3 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </button>
+                <div x-show="activeAccordion === 3" class="p-4 space-y-3" x-transition="" style="display: none;">
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Foto de Perfil (Avatar URL)</label>
+                        <input type="text" x-model="draftConfig.hero.avatarImage" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Banner de la Tarjeta (URL)</label>
+                        <input type="text" x-model="draftConfig.hero.bannerImage" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Fondo Global de Pantalla (URL)</label>
+                        <input type="text" x-model="draftConfig.hero.bgImage" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN 4: INDICADOR DE ESTADO -->
+            <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                <button @click="activeAccordion = activeAccordion === 4 ? null : 4" class="w-full p-3 bg-slate-900/50 flex justify-between items-center text-left border-b border-slate-800/40">
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-dot text-amber-500" :class="themeClasses.text"></i> Indicador de Estado
+                    </span>
+                    <i class="fa-solid text-xs text-slate-400 fa-chevron-down" :class="activeAccordion === 4 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </button>
+                <div x-show="activeAccordion === 4" class="p-4 space-y-3" x-transition="" style="display: none;">
+                    <div class="flex items-center justify-between bg-slate-900 p-2 rounded-lg">
+                        <span class="text-xs text-white font-bold uppercase">Consulta en Línea Activa</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" x-model="draftConfig.status.isActive" class="sr-only peer">
+                            <div class="w-9 h-5 bg-slate-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Texto del Indicador de Estado</label>
+                        <input type="text" x-model="draftConfig.status.text" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN 5: ENLACES DE CONTACTO -->
+            <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                <button @click="activeAccordion = activeAccordion === 5 ? null : 5" class="w-full p-3 bg-slate-900/50 flex justify-between items-center text-left border-b border-slate-800/40">
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-address-book text-amber-500" :class="themeClasses.text"></i> Canales de Contacto
+                    </span>
+                    <i class="fa-solid text-xs text-slate-400 fa-chevron-down" :class="activeAccordion === 5 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </button>
+                <div x-show="activeAccordion === 5" class="p-4 space-y-3" x-transition="" style="display: none;">
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Teléfono Oficina (Completo)</label>
+                        <input type="text" x-model="draftConfig.contact.phone" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Texto Bienvenida WhatsApp</label>
+                        <input type="text" x-model="draftConfig.contact.whatsappText" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Email Corporativo</label>
+                        <input type="text" x-model="draftConfig.contact.email" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Enlace Google Maps (Dirección)</label>
+                        <input type="text" x-model="draftConfig.contact.locationUrl" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">LinkedIn del Bufete (URL)</label>
+                        <input type="text" x-model="draftConfig.social.linkedin" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Sitio Web / Blog (URL)</label>
+                        <input type="text" x-model="draftConfig.social.blog" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN 6: SERVICIOS PRINCIPALES -->
+            <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                <button @click="activeAccordion = activeAccordion === 6 ? null : 6" class="w-full p-3 bg-slate-900/50 flex justify-between items-center text-left border-b border-slate-800/40">
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-briefcase text-amber-500" :class="themeClasses.text"></i> Especialidades Jurídicas
+                    </span>
+                    <i class="fa-solid text-xs text-slate-400 fa-chevron-down" :class="activeAccordion === 6 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </button>
+                <div x-show="activeAccordion === 6" class="p-4 space-y-4" x-transition="" style="display: none;">
+                    <div class="flex justify-between items-center bg-slate-900 p-2 rounded-lg">
+                        <span class="text-xs text-slate-300 font-bold uppercase">Listado de Servicios</span>
+                        <button @click="addService()" class="text-xs px-2.5 py-1 rounded text-slate-950 font-black flex items-center gap-1 from-amber-600 via-yellow-600 to-amber-700" :class="themeClasses.gradientBtn">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Añadir
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <template x-for="(service, index) in draftConfig.services" :key="index">
+                            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 relative space-y-2">
+                                <button @click="removeService(index)" class="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xs transition-colors">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="w-10/12">
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Icono FontAwesome (Ej: fa-gavel)</label>
+                                    <input type="text" x-model="service.icon" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Título de la Especialidad</label>
+                                    <input type="text" x-model="service.title" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Descripción Detallada</label>
+                                    <textarea x-model="service.desc" rows="2" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none resize-none"></textarea>
+                                </div>
+                            </div>
+                        </template><div class="bg-slate-900 p-3 rounded-lg border border-slate-800 relative space-y-2">
+                                <button @click="removeService(index)" class="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xs transition-colors">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="w-10/12">
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Icono FontAwesome (Ej: fa-gavel)</label>
+                                    <input type="text" x-model="service.icon" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Título de la Especialidad</label>
+                                    <input type="text" x-model="service.title" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Descripción Detallada</label>
+                                    <textarea x-model="service.desc" rows="2" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none resize-none"></textarea>
+                                </div>
+                            </div><div class="bg-slate-900 p-3 rounded-lg border border-slate-800 relative space-y-2">
+                                <button @click="removeService(index)" class="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xs transition-colors">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="w-10/12">
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Icono FontAwesome (Ej: fa-gavel)</label>
+                                    <input type="text" x-model="service.icon" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Título de la Especialidad</label>
+                                    <input type="text" x-model="service.title" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Descripción Detallada</label>
+                                    <textarea x-model="service.desc" rows="2" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none resize-none"></textarea>
+                                </div>
+                            </div><div class="bg-slate-900 p-3 rounded-lg border border-slate-800 relative space-y-2">
+                                <button @click="removeService(index)" class="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xs transition-colors">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="w-10/12">
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Icono FontAwesome (Ej: fa-gavel)</label>
+                                    <input type="text" x-model="service.icon" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Título de la Especialidad</label>
+                                    <input type="text" x-model="service.title" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Descripción Detallada</label>
+                                    <textarea x-model="service.desc" rows="2" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none resize-none"></textarea>
+                                </div>
+                            </div><div class="bg-slate-900 p-3 rounded-lg border border-slate-800 relative space-y-2">
+                                <button @click="removeService(index)" class="absolute top-2 right-2 text-red-400 hover:text-red-300 text-xs transition-colors">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <div class="w-10/12">
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Icono FontAwesome (Ej: fa-gavel)</label>
+                                    <input type="text" x-model="service.icon" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Título de la Especialidad</label>
+                                    <input type="text" x-model="service.title" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] text-slate-400 font-bold uppercase">Descripción Detallada</label>
+                                    <textarea x-model="service.desc" rows="2" class="w-full mt-0.5 bg-slate-950 border border-slate-750 text-white text-xs rounded p-1.5 outline-none resize-none"></textarea>
+                                </div>
+                            </div>
+                        <p x-show="draftConfig.services.length === 0" class="text-xs text-slate-500 italic text-center py-2" style="display: none;">Sin áreas de servicio activas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN 7: RUTA Y ENLACES AVANZADOS (CTA PERSONALIZADO) -->
+            <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                <button @click="activeAccordion = activeAccordion === 7 ? null : 7" class="w-full p-3 bg-slate-900/50 flex justify-between items-center text-left border-b border-slate-800/40">
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-link text-amber-500" :class="themeClasses.text"></i> Enlaces Avanzados (CTA)
+                    </span>
+                    <i class="fa-solid text-xs text-slate-400 fa-chevron-up" :class="activeAccordion === 7 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </button>
+                <div x-show="activeAccordion === 7" class="p-4 space-y-3" x-transition="">
+                    <div class="flex items-center justify-between bg-slate-900 p-2 rounded-lg">
+                        <span class="text-xs text-white font-bold uppercase">Habilitar Botón CTA Principal</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" x-model="draftConfig.advanced.showCta" class="sr-only peer">
+                            <div class="w-9 h-5 bg-slate-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Título del Botón de Acción</label>
+                        <input type="text" x-model="draftConfig.advanced.ctaText" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none" placeholder="Agendar Consulta">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Ruta / Enlace URL de Destino</label>
+                        <input type="text" x-model="draftConfig.advanced.ctaUrl" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none" placeholder="https://calendly.com/tu-perfil">
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 font-bold uppercase">Icono del Botón CTA (FontAwesome)</label>
+                        <input type="text" x-model="draftConfig.advanced.ctaIcon" class="w-full mt-1 bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-3 py-2 outline-none" placeholder="fa-regular fa-calendar-check">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACORDEÓN 8: GALERÍA INTERACTIVA -->
+            <div class="bg-slate-950 rounded-xl border border-slate-800 overflow-hidden">
+                <button @click="activeAccordion = activeAccordion === 8 ? null : 8" class="w-full p-3 bg-slate-900/50 flex justify-between items-center text-left border-b border-slate-800/40">
+                    <span class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                        <i class="fa-solid fa-images text-amber-500" :class="themeClasses.text"></i> Galería de la Firma
+                    </span>
+                    <i class="fa-solid text-xs text-slate-400 fa-chevron-down" :class="activeAccordion === 8 ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                </button>
+                <div x-show="activeAccordion === 8" class="p-4 space-y-3" x-transition="" style="display: none;">
+                    <div class="flex justify-between items-center bg-slate-900 p-2 rounded-lg">
+                        <span class="text-xs text-slate-300 font-bold uppercase">Imágenes en la Galería</span>
+                        <button @click="addGalleryImage()" class="text-xs px-2.5 py-1 rounded text-slate-950 font-black flex items-center gap-1 from-amber-600 via-yellow-600 to-amber-700" :class="themeClasses.gradientBtn">
+                            <i class="fa-solid fa-plus text-[10px]"></i> Añadir
+                        </button>
+                    </div>
+                    <div class="space-y-2">
+                        <template x-for="(img, index) in draftConfig.gallery" :key="index">
+                            <div class="flex gap-2 items-center">
+                                <input type="text" x-model="draftConfig.gallery[index]" placeholder="URL de la imagen" class="flex-grow bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-2.5 py-1.5 outline-none">
+                                <button @click="removeGalleryImage(index)" class="bg-red-950/60 hover:bg-red-900 text-red-400 px-2 py-1.5 rounded-lg border border-red-800/30 transition-colors">
+                                    <i class="fa-solid fa-trash-can text-xs"></i>
+                                </button>
+                            </div>
+                        </template><div class="flex gap-2 items-center">
+                                <input type="text" x-model="draftConfig.gallery[index]" placeholder="URL de la imagen" class="flex-grow bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-2.5 py-1.5 outline-none">
+                                <button @click="removeGalleryImage(index)" class="bg-red-950/60 hover:bg-red-900 text-red-400 px-2 py-1.5 rounded-lg border border-red-800/30 transition-colors">
+                                    <i class="fa-solid fa-trash-can text-xs"></i>
+                                </button>
+                            </div><div class="flex gap-2 items-center">
+                                <input type="text" x-model="draftConfig.gallery[index]" placeholder="URL de la imagen" class="flex-grow bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-2.5 py-1.5 outline-none">
+                                <button @click="removeGalleryImage(index)" class="bg-red-950/60 hover:bg-red-900 text-red-400 px-2 py-1.5 rounded-lg border border-red-800/30 transition-colors">
+                                    <i class="fa-solid fa-trash-can text-xs"></i>
+                                </button>
+                            </div><div class="flex gap-2 items-center">
+                                <input type="text" x-model="draftConfig.gallery[index]" placeholder="URL de la imagen" class="flex-grow bg-slate-900 border border-slate-750 text-white text-xs rounded-lg px-2.5 py-1.5 outline-none">
+                                <button @click="removeGalleryImage(index)" class="bg-red-950/60 hover:bg-red-900 text-red-400 px-2 py-1.5 rounded-lg border border-red-800/30 transition-colors">
+                                    <i class="fa-solid fa-trash-can text-xs"></i>
+                                </button>
+                            </div>
+                        <p x-show="draftConfig.gallery.length === 0" class="text-xs text-slate-500 italic text-center py-2" style="display: none;">La galería de fotos está vacía.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Acciones del Panel Administrativo -->
+        <div class="p-4 bg-slate-950 border-t border-slate-800 flex flex-col gap-2 shrink-0 font-sans">
+            <div class="flex gap-3">
+                <button @click="discardChanges()" class="w-1/2 bg-slate-850 hover:bg-slate-800 text-white font-bold py-2.5 px-3 rounded-xl text-xs transition-all border border-slate-700">Descartar</button>
+                <button @click="saveChanges()" class="w-1/2 text-slate-950 font-black py-2.5 px-3 rounded-xl text-xs transition-all shadow-lg uppercase tracking-wider bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700" :class="themeClasses.gradientBtn">Guardar Memoria</button>
+            </div>
+            <!-- HERRAMIENTA CLAVE: EXPORTADOR DE CÓDIGO HTML INTEGRADO -->
+            <button @click="downloadUpdatedHTML()" class="w-full bg-slate-850 hover:bg-slate-800 text-emerald-400 hover:text-emerald-300 font-extrabold py-3 px-4 rounded-xl text-xs transition-all border-2 border-emerald-500/30 hover:border-emerald-400/50 flex items-center justify-center gap-2 uppercase tracking-widest shadow-xl">
+                <i class="fa-solid fa-file-code text-base"></i> Exportar HTML Final
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- ÁREA CENTRAL DE LA TARJETA DIGITAL         -->
+    <!-- ========================================== -->
+    <div class="flex-grow min-h-screen relative flex items-center justify-center transition-all duration-300 p-2 md:p-8 bg-slate-900/50" :class="isAdminMode ? 'p-2 md:p-8 bg-slate-900/50' : 'p-2 sm:p-4'">
+        
+        <!-- Fondos Generales (Dinámicos y de alta calidad visual) -->
+        <div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transition-all duration-500" :style="{ backgroundImage: `url('${draftConfig.hero.bgImage}')` }" style="background-image: url(&quot;https://i.postimg.cc/wjvHkgHK/BANER.png&quot;);"></div>
+        <div class="absolute inset-0 bg-slate-950/85 backdrop-blur-[8px] z-0"></div>
+        <!-- Aura Luminosa Dinámica de Resplandor Detrás de la Tarjeta -->
+        <div class="absolute w-[500px] h-[500px] rounded-full blur-[130px] top-1/4 left-1/2 -translate-x-1/2 z-0 opacity-20 bg-amber-600" :class="themeClasses.bgGlow"></div>
+
+        <!-- Contenedor Principal de la Tarjeta Corporativa -->
+        <div class="w-full h-[95vh] overflow-y-auto md:h-[860px] md:max-w-sm bg-slate-900/95 backdrop-blur-2xl md:rounded-3xl flex flex-col justify-between shadow-2xl relative z-10 card-glow animated-border transition-all duration-300 border-amber-600" :class="themeClasses.ring">
+
+            <div>
+                <!-- Banner Superior de Estilo Jurídico -->
+                <div class="relative h-44 bg-cover bg-center overflow-hidden transition-all duration-500" :style="{ backgroundImage: `url('${draftConfig.hero.bannerImage}')` }" style="background-image: url(&quot;https://i.postimg.cc/4dtXhPgL/LOGO.jpg &quot;);">
+                    <div class="absolute inset-0 bg-gradient-to-b from-slate-950/30 via-slate-950/60 to-slate-900"></div>
+                    <div class="absolute inset-0 mix-blend-multiply opacity-40 bg-amber-900" :class="themeClasses.bgDark"></div>
+                </div>
+
+                <!-- Fotografía de Perfil del Abogado con Anillo Técnico de Enfoque -->
+                <div class="flex justify-center -mt-24 z-10 relative">
+                    <div class="relative group">
+                        <!-- Anillos Orbitantes de Diseño Premium -->
+                        <div class="absolute -inset-2.5 rounded-full opacity-80 tech-ring blur-[3px] bg-gradient-to-tr to-transparent from-amber-500 via-yellow-500" :class="[themeClasses.from, themeClasses.via]"></div>
+                        <div class="absolute -inset-1.5 rounded-full border border-dashed opacity-55 tech-ring-reverse border-amber-600" :class="themeClasses.ring"></div>
+                        
+                        <!-- Contenedor del Retrato Institucional -->
+                        <div class="relative w-36 h-36 rounded-full border-4 border-slate-900 bg-slate-950 flex items-center justify-center overflow-hidden shadow-2xl">
+                            <img class="w-full h-full object-cover transition-all duration-500" :src="draftConfig.hero.avatarImage" alt="Retrato Profesional" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&amp;w=256&amp;auto=format&amp;fit=crop';" src="https://i.postimg.cc/13Hn89Hp/FONDO.jpg">
+                        </div>
+                        
+                        <!-- Gavel / Mazo Jurídico Indicador de Estado Activo de Consulta -->
+                        <div x-show="draftConfig.status.isActive" class="absolute bottom-2 right-2 rounded-full w-8 h-8 flex items-center justify-center border-2 border-slate-900 shadow-xl animate-pulse bg-gradient-to-r from-amber-500 to-amber-600" :class="[themeClasses.from, themeClasses.to]" :title="draftConfig.status.text" title="Consultores Laboralistas Disponibles">
+                            <i class="fa-solid fa-gavel text-slate-950 text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Textos del Perfil Legal y de Seguridad Social -->
+                <div class="text-center px-6 pt-5 pb-2">
+                    <h2 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white tracking-tight leading-none via-amber-100 to-amber-400" :class="[themeClasses.viaText, themeClasses.toText]" x-text="draftConfig.hero.name">HARVEIRY MELO MACHADO</h2>
+                    <p class="font-extrabold text-xs tracking-widest uppercase mt-3 text-amber-500" :class="themeClasses.text" x-text="draftConfig.hero.subtitle">Especialistas en Derecho Laboral y Seguridad Social</p>
+                    <p class="text-[12px] text-slate-300 font-medium mt-3.5 leading-relaxed" x-text="draftConfig.hero.description">Defendemos con integridad jurídica el futuro de los trabajadores y la estabilidad de las organizaciones. Soluciones estratégicas en pensiones, despidos, fueros y riesgos de salud.</p>
+                    
+                    <!-- Tarjeta Geográfica de Cobertura -->
+                    <div class="mt-4 bg-slate-950/80 rounded-xl py-2.5 px-3 border flex flex-col items-center gap-1 border-amber-500/20" :class="themeClasses.borderOp">
+                        <span class="text-[9px] font-extrabold uppercase tracking-wider text-amber-500" :class="themeClasses.text" x-text="draftConfig.hero.coverage">Defensa Jurídica a Nivel Nacional</span>
+                        <p class="text-[10px] text-slate-300 font-bold text-center animate-pulse" x-text="draftConfig.hero.coverageSub">Despachos físicos en principales capitales y videoconferencias virtuales inmediatas</p>
+                    </div>
+                </div>
+
+                <!-- Grilla de Accesos Directos Táctiles (Optimizado para Móviles) -->
+                <div class="px-6 pt-5 pb-4">
+                    <div class="grid grid-cols-3 gap-y-5 gap-x-5">
+                        
+                        <!-- Opción: Llamada Telefónica Directa -->
+                        <a :href="'tel:' + draftConfig.contact.phone" class="flex flex-col items-center text-center group interactive-element" title="Llamar Directamente" href="tel:+573157033611">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center shadow-lg text-amber-500" :class="themeClasses.text">
+                                <i class="fa-solid fa-phone text-xl"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-300 mt-2">Llamar</p>
+                        </a>
+                        
+                        <!-- Opción: Horarios de Atención -->
+                        <div @click="scheduleModal = true" class="cursor-pointer flex flex-col items-center text-center group interactive-element" title="Horarios de Atención">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center shadow-lg text-amber-500" :class="themeClasses.text">
+                                <i class="fa-solid fa-clock text-xl"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-300 mt-2">Horario</p>
+                        </div>
+                        
+                        <!-- Opción: Áreas de Especialización -->
+                        <div @click="servicesModal = true" class="cursor-pointer flex flex-col items-center text-center group interactive-element" title="Nuestras Especialidades">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center shadow-lg text-amber-500" :class="themeClasses.text">
+                                <i class="fa-solid fa-scale-balanced text-xl"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-300 mt-2">Especialidad</p>
+                        </div>
+                        
+                        <!-- Opción: WhatsApp Legal -->
+                        <a :href="'https://wa.me/' + draftConfig.contact.phone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent(draftConfig.contact.whatsappText)" target="_blank" class="flex flex-col items-center text-center group interactive-element" title="Escríbanos por WhatsApp" href="https://wa.me/573157033611?text=Estimados%20doctor%2C%20requiero%20asesor%C3%ADa%20prioritaria%20sobre%20un%20caso%20de%20derecho%20laboral%20%2F%20pensiones.">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center shadow-lg text-amber-500" :class="themeClasses.text">
+                                <i class="fa-brands fa-whatsapp text-xl text-emerald-400"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-300 mt-2">WhatsApp</p>
+                        </a>
+                        
+                        <!-- Opción: Correo Oficial -->
+                        <a :href="'mailto:' + draftConfig.contact.email" class="flex flex-col items-center text-center group interactive-element" title="Enviar un Correo" href="mailto:juharveiry@gmail.com">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center shadow-lg text-amber-500" :class="themeClasses.text">
+                                <i class="fa-solid fa-envelope text-xl"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-300 mt-2">Correo</p>
+                        </a>
+                        
+                        <!-- Opción: Ubicación en Google Maps -->
+                        <a :href="draftConfig.contact.locationUrl" target="_blank" class="flex flex-col items-center text-center group interactive-element" title="Ubicación de la Oficina" href="https://maps.google.com">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center shadow-lg text-amber-500" :class="themeClasses.text">
+                                <i class="fa-solid fa-location-dot text-xl"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-300 mt-2">Ubicación</p>
+                        </a>
+
+                        <!-- Opción: Fotos del Bufete (Condicional) -->
+                        <div x-show="draftConfig.gallery.length &gt; 0" @click="galleryModal = true" class="cursor-pointer flex flex-col items-center text-center group interactive-element" title="Ver la Galería del Bufete">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center shadow-lg text-amber-500" :class="themeClasses.text">
+                                <i class="fa-solid fa-images text-xl"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-300 mt-2">La Firma</p>
+                        </div>
+                        
+                        <!-- Opción: LinkedIn Profesional -->
+                        <a :href="draftConfig.social.linkedin" target="_blank" class="flex flex-col items-center text-center group interactive-element" title="Perfil Corporativo de LinkedIn" href="https://www.facebook.com/harveiry.melo?locale=es_LA">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center shadow-lg text-amber-500" :class="themeClasses.text">
+                                <i class="fa-brands fa-linkedin-in text-xl text-blue-400"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-300 mt-2">LinkedIn</p>
+                        </a>
+                        
+                        <!-- Opción: Portal Web Oficial -->
+                        <a :href="draftConfig.social.blog" target="_blank" class="flex flex-col items-center text-center group interactive-element" title="Visitar Sitio Web Principal" href="https://www.instagram.com/harveiry/">
+                            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center shadow-lg text-amber-500" :class="themeClasses.text">
+                                <i class="fa-solid fa-globe text-xl"></i>
+                            </div>
+                            <p class="text-[11px] font-bold text-slate-300 mt-2">Sitio Web</p>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Secciones Inferiores de Acción Rápida -->
+            <div class="px-6 py-6 space-y-4">
+                 <!-- Botón Destacado: Agendar Consulta Jurídica Directa -->
+                 <a x-show="draftConfig.advanced.showCta" :href="draftConfig.advanced.ctaUrl" target="_blank" class="block w-full text-slate-950 font-black py-4 px-4 rounded-xl text-center interactive-element uppercase tracking-wider text-xs shadow-lg border bg-gradient-to-r cursor-pointer from-amber-600 via-yellow-600 to-amber-700 shadow-amber-600/30" :class="[themeClasses.gradientBtn, themeClasses.glow]" href="https://wa.me/573157033611?text=Hola,%20deseo%20agendar%20una%20consulta%20laboral%20especializada.">
+                    <i class="mr-2 animate-pulse text-sm fa-regular fa-calendar-check" :class="draftConfig.advanced.ctaIcon || 'fa-regular fa-calendar-check'"></i><span x-text="draftConfig.advanced.ctaText">Agendar Consulta Jurídica</span>
+                 </a>
+                 
+                 <!-- Guardado en Agenda de Contactos e Instalación PWA -->
+                 <div class="flex gap-4">
+                    <button @click="downloadVCard()" class="flex-1 bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold py-3 px-4 rounded-xl text-center interactive-element flex items-center justify-center gap-2 border border-slate-700 text-xs">
+                        <i class="fa-solid fa-id-card text-amber-500" :class="themeClasses.text"></i>Guardar Contacto
+                    </button>
+                    <button @click="installModal = true" class="w-1/3 bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold py-3 px-4 rounded-xl text-center interactive-element flex items-center justify-center gap-2 border border-slate-700 text-xs">
+                        <i class="fa-solid fa-download text-amber-500" :class="themeClasses.text"></i>App
+                    </button>
+                 </div>
+            </div>
+            
+            <!-- ========================================== -->
+            <!-- MODALES INTERNOS DE LA PREVISUALIZACIÓN    -->
+            <!-- ========================================== -->
+
+            <!-- Modal: Galería de la Firma y Oficinas -->
+            <div x-show="galleryModal" @keydown.escape.window="galleryModal = false" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md flex items-center justify-center z-50 p-4" x-transition.opacity="" style="display: none;">
+                <div @click.away="galleryModal = false" class="bg-slate-900 rounded-2xl w-full max-w-sm h-full max-h-[85vh] flex flex-col border-2 overflow-hidden shadow-2xl border-amber-600" :class="themeClasses.ring">
+                    <div class="p-4 text-center font-bold text-slate-950 bg-gradient-to-r flex justify-center items-center gap-2 from-amber-600 via-yellow-600 to-amber-700" :class="themeClasses.gradientBtn">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <h3 class="text-lg font-black uppercase tracking-wider">La Firma y Equipo</h3>
+                    </div>
+                    <div class="flex-grow p-4 overflow-y-auto space-y-4 admin-scroll">
+                        <template x-for="(imgUrl, idx) in draftConfig.gallery" :key="idx">
+                            <img :src="imgUrl" class="w-full h-auto rounded-xl border border-slate-700 shadow-md" alt="Galería Bufete" onerror="this.style.display='none'">
+                        </template><img :src="imgUrl" class="w-full h-auto rounded-xl border border-slate-700 shadow-md" alt="Galería Bufete" onerror="this.style.display='none'" src="https://i.postimg.cc/C5SpnVJz/PENSION-DE-VEJEZ.jpg" style="display: none;"><img :src="imgUrl" class="w-full h-auto rounded-xl border border-slate-700 shadow-md" alt="Galería Bufete" onerror="this.style.display='none'" src="https://i.postimg.cc/wM0ZtR7f/INDEMNIZACION-POR-DANOS-Y-PERJUICIOS.jpg" style="display: none;"><img :src="imgUrl" class="w-full h-auto rounded-xl border border-slate-700 shadow-md" alt="Galería Bufete" onerror="this.style.display='none'" src="https://i.postimg.cc/sgt8Zrgf/PENSION-NOTARIOS.jpg" style="display: none;">
+                    </div>
+                    <div class="p-4 bg-slate-950 border-t border-slate-800 flex justify-center">
+                        <button @click="galleryModal = false" class="bg-slate-800 text-white font-bold py-2.5 px-6 rounded-lg border border-slate-700 w-full text-xs">Cerrar Galería</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal: Especialidades en Derecho Laboral y Seguridad Social -->
+            <div x-show="servicesModal" @keydown.escape.window="servicesModal = false" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md flex items-center justify-center z-50 p-4" x-transition.opacity="" style="display: none;">
+                <div @click.away="servicesModal = false" class="bg-slate-900 rounded-2xl w-full max-w-sm h-full max-h-[85vh] flex flex-col border-2 overflow-hidden shadow-2xl border-amber-600" :class="themeClasses.ring">
+                    <div class="p-4 text-center font-bold text-slate-950 bg-gradient-to-r flex justify-center items-center gap-2 from-amber-600 via-yellow-600 to-amber-700" :class="themeClasses.gradientBtn">
+                        <i class="fa-solid fa-scale-unbalanced-flip"></i>
+                        <h3 class="text-lg font-black uppercase tracking-wider">Nuestras Especialidades</h3>
+                    </div>
+                    <div class="flex-grow p-4 overflow-y-auto space-y-4 admin-scroll">
+                        <template x-for="(srv, idx) in draftConfig.services" :key="idx">
+                            <div class="flex items-start gap-4 p-3 bg-slate-850/80 rounded-xl border border-slate-750 interactive-element">
+                                <div class="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 border bg-opacity-10" :class="[themeClasses.text, themeClasses.borderOp, themeClasses.bgOp]">
+                                    <i class="fa-solid text-xl" :class="srv.icon"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-white" x-text="srv.title"></h4>
+                                    <p class="text-slate-300 text-xs mt-1 leading-relaxed" x-text="srv.desc"></p>
+                                </div>
+                            </div>
+                        </template><div class="flex items-start gap-4 p-3 bg-slate-850/80 rounded-xl border border-slate-750 interactive-element">
+                                <div class="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 border bg-opacity-10 text-amber-500 border-amber-500/20 bg-amber-500" :class="[themeClasses.text, themeClasses.borderOp, themeClasses.bgOp]">
+                                    <i class="fa-solid text-xl fa-scale-balanced" :class="srv.icon"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-white" x-text="srv.title">Despidos e Indemnizaciones</h4>
+                                    <p class="text-slate-300 text-xs mt-1 leading-relaxed" x-text="srv.desc">Liquidación precisa de prestaciones sociales, indemnización por despido injustificado y protección de fueros laborales de salud, maternidad y prepensionados.</p>
+                                </div>
+                            </div><div class="flex items-start gap-4 p-3 bg-slate-850/80 rounded-xl border border-slate-750 interactive-element">
+                                <div class="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 border bg-opacity-10 text-amber-500 border-amber-500/20 bg-amber-500" :class="[themeClasses.text, themeClasses.borderOp, themeClasses.bgOp]">
+                                    <i class="fa-solid text-xl fa-user-shield" :class="srv.icon"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-white" x-text="srv.title">Pensiones y Jubilación</h4>
+                                    <p class="text-slate-300 text-xs mt-1 leading-relaxed" x-text="srv.desc">Reclamaciones de pensión de vejez, invalidez y sobrevivientes. Reconstrucción de historia laboral y traslados de régimen de seguridad social. indemnización sustitutiva y devolución de aportes, auxilio funerario</p>
+                                </div>
+                            </div><div class="flex items-start gap-4 p-3 bg-slate-850/80 rounded-xl border border-slate-750 interactive-element">
+                                <div class="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 border bg-opacity-10 text-amber-500 border-amber-500/20 bg-amber-500" :class="[themeClasses.text, themeClasses.borderOp, themeClasses.bgOp]">
+                                    <i class="fa-solid text-xl fa-briefcase-medical" :class="srv.icon"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-white" x-text="srv.title">Accidentes Laborales y ARL</h4>
+                                    <p class="text-slate-300 text-xs mt-1 leading-relaxed" x-text="srv.desc">Indemnizaciones plenas de perjuicios por culpa patronal, apelación de dictámenes de incapacidad ante juntas médicas y representación técnica.</p>
+                                </div>
+                            </div><div class="flex items-start gap-4 p-3 bg-slate-850/80 rounded-xl border border-slate-750 interactive-element">
+                                <div class="w-12 h-12 rounded-lg flex items-center justify-center shrink-0 border bg-opacity-10 text-amber-500 border-amber-500/20 bg-amber-500" :class="[themeClasses.text, themeClasses.borderOp, themeClasses.bgOp]">
+                                    <i class="fa-solid text-xl fa-handshake" :class="srv.icon"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-white" x-text="srv.title">Derecho Corporativo Laboral</h4>
+                                    <p class="text-slate-300 text-xs mt-1 leading-relaxed" x-text="srv.desc">Auditoría a empresas, estructuración de contratos de trabajo, reglamentos internos de trabajo, comités de convivencia y prevención de acoso laboral (Ley 1010).</p>
+                                </div>
+                            </div>
+                        <p x-show="draftConfig.services.length === 0" class="text-center text-slate-500 text-xs py-10" style="display: none;">No hay especialidades cargadas.</p>
+                    </div>
+                    <div class="p-4 bg-slate-950 border-t border-slate-800 flex justify-center">
+                        <button @click="servicesModal = false" class="bg-slate-800 text-white font-bold py-2.5 px-6 rounded-lg border border-slate-700 w-full text-xs">Cerrar Especialidades</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal: Horarios Detallados de Atención -->
+            <div x-show="scheduleModal" @keydown.escape.window="scheduleModal = false" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md flex items-center justify-center z-50 p-4" x-transition.opacity="" style="display: none;">
+                <div @click.away="scheduleModal = false" class="bg-slate-900 rounded-2xl w-full max-w-sm border-2 overflow-hidden shadow-2xl border-amber-600" :class="themeClasses.ring">
+                    <div class="p-4 text-center font-bold text-slate-950 bg-gradient-to-r flex items-center justify-center gap-2 from-amber-600 via-yellow-600 to-amber-700" :class="themeClasses.gradientBtn">
+                        <i class="fa-solid fa-clock"></i> <span class="uppercase tracking-wider">Horarios y Consultas</span>
+                    </div>
+                    <div class="p-6 text-slate-200 space-y-4 bg-slate-950/50">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-2.5">
+                            <span class="font-semibold text-sm">Lunes a Viernes</span>
+                            <span class="font-bold text-sm text-amber-500" :class="themeClasses.text">8:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-2.5">
+                            <span class="font-semibold text-sm">Sábados</span>
+                            <span class="font-bold text-sm text-amber-500" :class="themeClasses.text">9:00 AM - 1:00 PM</span>
+                        </div>
+                        <div class="flex justify-between items-center py-1">
+                            <span class="font-semibold text-sm text-slate-400">Domingos y Festivos</span>
+                            <span class="text-slate-400 text-sm font-bold">Cerrado</span>
+                        </div>
+                        <button @click="scheduleModal = false" class="mt-6 bg-slate-800 text-white font-bold py-2.5 px-6 rounded-lg border border-slate-700 w-full text-xs">Cerrar Horarios</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal: Instrucciones de Instalación App Móvil (PWA) -->
+            <div x-show="installModal" @keydown.escape.window="installModal = false" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md flex items-center justify-center z-50 p-4" x-transition.opacity="" style="display: none;">
+                <div @click.away="installModal = false" class="bg-slate-900 rounded-2xl shadow-2xl w-full max-w-sm flex flex-col border-2 overflow-hidden border-amber-600" :class="themeClasses.ring">
+                    <div class="p-5 text-center text-slate-950 bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700" :class="themeClasses.gradientBtn">
+                        <h3 class="text-lg font-black flex items-center justify-center gap-2 uppercase tracking-wider"><i class="fa-solid fa-mobile-screen-button"></i> Instalar en el Móvil</h3>
+                    </div>
+                    <div class="p-6 overflow-y-auto space-y-4 bg-slate-950/50">
+                        <div class="p-4 bg-slate-850/80 rounded-xl border border-slate-750/50">
+                            <h4 class="font-bold text-sm flex items-center gap-2 mb-2 text-amber-500" :class="themeClasses.text"><i class="fa-brands fa-apple"></i> iOS Safari (iPhone)</h4>
+                            <p class="text-slate-300 text-xs leading-relaxed">Pulse el botón <strong>Compartir</strong> (icono de cuadrado con flecha hacia arriba) y elija <strong>"Agregar a la pantalla de inicio"</strong>.</p>
+                        </div>
+                        <div class="p-4 bg-slate-850/80 rounded-xl border border-slate-750/50">
+                            <h4 class="font-bold text-sm flex items-center gap-2 mb-2 text-amber-500" :class="themeClasses.text"><i class="fa-brands fa-android"></i> Android (Chrome)</h4>
+                            <p class="text-slate-300 text-xs leading-relaxed">Pulse los <strong>tres puntos</strong> en la barra superior derecha y seleccione <strong>"Agregar a la pantalla principal"</strong>.</p>
+                        </div>
+                        <button @click="installModal = false" class="bg-slate-800 text-white font-bold py-2.5 px-6 rounded-lg border border-slate-700 w-full text-xs">Entendido</button>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- Fin Contenedor Tarjeta -->
+    </div> <!-- Fin Layout Derecha -->
+
+    <!-- Toast Informativo Flotante de Procesos Realizados -->
+    <div x-show="showToast" class="fixed top-4 right-4 z-[110] bg-emerald-600 text-white px-6 py-3 rounded-lg shadow-2xl font-bold text-sm flex items-center gap-2 border border-emerald-500" x-transition.opacity="" style="transform-origin: center center; transition-delay: 0s; transition-property: opacity, transform; transition-duration: 0.15s; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; transform: scale(1);">
+        <i class="fa-solid fa-circle-check text-lg"></i> <span x-text="toastMessage">Cambios sincronizados en memoria</span>
+    </div>
+
+    <!-- Script de Arquitectura Alpina y Persistencia -->
+    <script id="app-script">
+        function appData() {
+            // Datos por defecto totalmente adaptados al derecho laboral y la seguridad social
+            // Se utiliza marcadores comentados para facilitar la extracción y sustitución exacta de datos en la exportación HTML
+            /*START_CONFIG*/const defaultConfig = {
+    "theme": "gold",
+    "font": "Poppins",
+    "hero": {
+        "bgImage": "https://i.postimg.cc/wjvHkgHK/BANER.png",
+        "bannerImage": "https://i.postimg.cc/4dtXhPgL/LOGO.jpg ",
+        "avatarImage": "https://i.postimg.cc/13Hn89Hp/FONDO.jpg",
+        "name": "HARVEIRY MELO MACHADO",
+        "subtitle": "Especialistas en Derecho Laboral y Seguridad Social",
+        "description": "Defendemos con integridad jurídica el futuro de los trabajadores y la estabilidad de las organizaciones. Soluciones estratégicas en pensiones, despidos, fueros y riesgos de salud.",
+        "coverage": "Defensa Jurídica a Nivel Nacional",
+        "coverageSub": "Despachos físicos en principales capitales y videoconferencias virtuales inmediatas"
+    },
+    "status": {
+        "isActive": true,
+        "text": "Consultores Laboralistas Disponibles"
+    },
+    "contact": {
+        "phone": "+573157033611",
+        "whatsappText": "Estimados doctor, requiero asesoría prioritaria sobre un caso de derecho laboral / pensiones.",
+        "email": "juharveiry@gmail.com",
+        "locationUrl": "https://maps.google.com"
+    },
+    "social": {
+        "linkedin": "https://www.facebook.com/harveiry.melo?locale=es_LA",
+        "blog": "https://www.instagram.com/harveiry/"
+    },
+    "advanced": {
+        "showCta": true,
+        "ctaText": "Agendar Consulta Jurídica",
+        "ctaUrl": "https://wa.me/573157033611?text=Hola,%20deseo%20agendar%20una%20consulta%20laboral%20especializada.",
+        "ctaIcon": "fa-regular fa-calendar-check"
+    },
+    "services": [
+        {
+            "icon": "fa-scale-balanced",
+            "title": "Despidos e Indemnizaciones",
+            "desc": "Liquidación precisa de prestaciones sociales, indemnización por despido injustificado y protección de fueros laborales de salud, maternidad y prepensionados."
+        },
+        {
+            "icon": "fa-user-shield",
+            "title": "Pensiones y Jubilación",
+            "desc": "Reclamaciones de pensión de vejez, invalidez y sobrevivientes. Reconstrucción de historia laboral y traslados de régimen de seguridad social. indemnización sustitutiva y devolución de aportes, auxilio funerario"
+        },
+        {
+            "icon": "fa-briefcase-medical",
+            "title": "Accidentes Laborales y ARL",
+            "desc": "Indemnizaciones plenas de perjuicios por culpa patronal, apelación de dictámenes de incapacidad ante juntas médicas y representación técnica."
+        },
+        {
+            "icon": "fa-handshake",
+            "title": "Derecho Corporativo Laboral",
+            "desc": "Auditoría a empresas, estructuración de contratos de trabajo, reglamentos internos de trabajo, comités de convivencia y prevención de acoso laboral (Ley 1010)."
+        }
+    ],
+    "gallery": [
+        "https://i.postimg.cc/C5SpnVJz/PENSION-DE-VEJEZ.jpg",
+        "https://i.postimg.cc/wM0ZtR7f/INDEMNIZACION-POR-DANOS-Y-PERJUICIOS.jpg",
+        "https://i.postimg.cc/sgt8Zrgf/PENSION-NOTARIOS.jpg"
+    ]
+};/*END_CONFIG*/
+
+            // Sincronización híbrida: LocalStorage como caché de respaldo
+            const savedData = JSON.parse(localStorage.getItem('cardAdminLaborConfig')) || defaultConfig;
+
+            return {
+                // Estados del Panel de Control
+                loginModal: false,
+                passwordInput: '',
+                loginError: false,
+                isAdminMode: false,
+                activeAccordion: 1, // Seccion de Apariencia por defecto
+                
+                // Notificaciones flotantes
+                showToast: false,
+                toastMessage: '',
+
+                // Visibilidad de Modales Auxiliares
+                servicesModal: false,
+                scheduleModal: false,
+                installModal: false,
+                galleryModal: false,
+
+                // Gestión de Memoria Operativa
+                savedConfig: JSON.parse(JSON.stringify(savedData)),
+                draftConfig: JSON.parse(JSON.stringify(savedData)),
+
+                init() {
+                    // Carga tipográfica inicial si no está por defecto
+                },
+
+                // Procesamiento de Clave Maestra
+                authenticate() {
+                    if (this.passwordInput === '1234') {
+                        this.isAdminMode = true;
+                        this.loginModal = false;
+                        this.loginError = false;
+                        this.passwordInput = '';
+                        this.triggerToast('Consola de Edición Iniciada');
+                    } else {
+                        this.loginError = true;
+                    }
+                },
+                logout() {
+                    this.isAdminMode = false;
+                    this.discardChanges();
+                },
+
+                // Persistencia e Integración de Cambios
+                saveChanges() {
+                    this.savedConfig = JSON.parse(JSON.stringify(this.draftConfig));
+                    localStorage.setItem('cardAdminLaborConfig', JSON.stringify(this.savedConfig));
+                    this.triggerToast('Cambios sincronizados en memoria');
+                },
+                discardChanges() {
+                    this.draftConfig = JSON.parse(JSON.stringify(this.savedConfig));
+                    this.triggerToast('Cambios descartados');
+                },
+
+                // Métodos Dinámicos de Listas
+                addService() {
+                    this.draftConfig.services.unshift({ 
+                        icon: 'fa-check', 
+                        title: 'Escriba un nuevo servicio', 
+                        desc: 'Escriba los alcances y detalles legales de esta área.' 
+                    });
+                },
+                removeService(index) {
+                    this.draftConfig.services.splice(index, 1);
+                },
+                addGalleryImage() {
+                    this.draftConfig.gallery.unshift('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800');
+                },
+                removeGalleryImage(index) {
+                    this.draftConfig.gallery.splice(index, 1);
+                },
+
+                triggerToast(msg) {
+                    this.toastMessage = msg;
+                    this.showToast = true;
+                    setTimeout(() => { this.showToast = false; }, 3000);
+                },
+
+                // Exportación Avanzada del Código Fuente del HTML Completo con Configuración Incrustada
+                async downloadUpdatedHTML() {
+                    this.saveChanges(); // Garantizar que la memoria local está guardada antes del empaquetado
+                    
+                    let htmlSource = "";
+                    try {
+                        // Intentar obtener el archivo original en limpio desde la ubicación actual
+                        const response = await fetch(window.location.href);
+                        if (response.ok) {
+                            htmlSource = await response.text();
+                        } else {
+                            throw new Error("Lectura de red deshabilitada.");
+                        }
+                    } catch (e) {
+                        // Fallback absoluto: Reconstrucción utilizando el DOM vivo del navegador
+                        htmlSource = document.documentElement.outerHTML;
+                    }
+
+                    // Encontrar el bloque demarcado /*START_CONFIG*/ y /*END_CONFIG*/
+                    const startMarker = '/*START_CONFIG*/const defaultConfig = ';
+                    const endMarker = ';/*END_CONFIG*/';
+
+                    const startIndex = htmlSource.indexOf(startMarker);
+                    const endIndex = htmlSource.indexOf(endMarker);
+
+                    let updatedHTML = "";
+
+                    if (startIndex !== -1 && endIndex !== -1) {
+                        // Formatear JSON limpio sin rastros de estados de sesión o modos de administración activados para el cliente final
+                        const cleanConfig = JSON.parse(JSON.stringify(this.savedConfig));
+                        const serializedConfig = JSON.stringify(cleanConfig, null, 4);
+                        
+                        updatedHTML = htmlSource.substring(0, startIndex + startMarker.length) + 
+                                      serializedConfig + 
+                                      htmlSource.substring(endIndex);
+                    } else {
+                        // Si se procesa un DOM vivo modificado por Alpine, creamos una alerta informativa de depuración
+                        updatedHTML = "<!DOCTYPE html>\n" + htmlSource;
+                    }
+
+                    // Forzar limpieza estética en el archivo resultante para que no empiece abierto en modo administración
+                    updatedHTML = updatedHTML.replace('isAdminMode: false', 'isAdminMode: false');
+                    updatedHTML = updatedHTML.replace('loginModal: false', 'loginModal: false');
+
+                    // Crear el trigger de descarga del archivo HTML listo para desplegar
+                    const blob = new Blob([updatedHTML], { type: 'text/html;charset=utf-8' });
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = URL.createObjectURL(blob);
+                    downloadLink.setAttribute('download', 'tarjeta_digital_laboral_auto_instalable.html');
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+
+                    this.triggerToast('HTML listo para servidor descargado');
+                },
+
+                // Clases de Estilo de Temas Dinámicos Sincronizados
+                get themeClasses() {
+                    const t = this.draftConfig.theme;
+                    const map = {
+                        emerald: { 
+                            text: 'text-emerald-400', 
+                            focusColor: 'emerald-500',
+                            from: 'from-emerald-500', 
+                            via: 'via-teal-400', 
+                            to: 'to-emerald-600', 
+                            viaText: 'via-teal-100', 
+                            toText: 'to-emerald-400', 
+                            ring: 'border-emerald-600', 
+                            borderOp: 'border-emerald-500/20', 
+                            bgOp: 'bg-emerald-500', 
+                            gradientBtn: 'from-emerald-600 via-teal-600 to-emerald-700', 
+                            bgDark: 'bg-emerald-900', 
+                            glow: 'shadow-emerald-600/30', 
+                            bgGlow: 'bg-emerald-600' 
+                        },
+                        gold: { 
+                            text: 'text-amber-500', 
+                            focusColor: 'amber-500',
+                            from: 'from-amber-500', 
+                            via: 'via-yellow-500', 
+                            to: 'to-amber-600', 
+                            viaText: 'via-amber-100', 
+                            toText: 'to-amber-400', 
+                            ring: 'border-amber-600', 
+                            borderOp: 'border-amber-500/20', 
+                            bgOp: 'bg-amber-500', 
+                            gradientBtn: 'from-amber-600 via-yellow-600 to-amber-700', 
+                            bgDark: 'bg-amber-900', 
+                            glow: 'shadow-amber-600/30', 
+                            bgGlow: 'bg-amber-600' 
+                        },
+                        blue: { 
+                            text: 'text-blue-400', 
+                            focusColor: 'blue-500',
+                            from: 'from-blue-500', 
+                            via: 'via-cyan-400', 
+                            to: 'to-blue-600', 
+                            viaText: 'via-cyan-100', 
+                            toText: 'to-blue-400', 
+                            ring: 'border-blue-500', 
+                            borderOp: 'border-blue-500/20', 
+                            bgOp: 'bg-blue-500', 
+                            gradientBtn: 'from-blue-600 via-cyan-600 to-blue-700', 
+                            bgDark: 'bg-blue-900', 
+                            glow: 'shadow-blue-600/30', 
+                            bgGlow: 'bg-blue-600' 
+                        },
+                        red: { 
+                            text: 'text-red-500', 
+                            focusColor: 'red-500',
+                            from: 'from-red-500', 
+                            via: 'via-rose-500', 
+                            to: 'to-red-600', 
+                            viaText: 'via-rose-100', 
+                            toText: 'to-red-400', 
+                            ring: 'border-red-600', 
+                            borderOp: 'border-red-500/20', 
+                            bgOp: 'bg-red-500', 
+                            gradientBtn: 'from-red-600 via-rose-600 to-red-700', 
+                            bgDark: 'bg-red-900', 
+                            glow: 'shadow-red-600/30', 
+                            bgGlow: 'bg-red-600' 
+                        }
+                    };
+                    return map[t] || map.emerald;
+                },
+
+                // Descarga de Tarjeta de Contacto (.VCF) adaptada y dinámica
+                downloadVCard() {
+                    const data = this.isAdminMode ? this.draftConfig : this.savedConfig;
+                    
+                    const vCard = `BEGIN:VCARD\nVERSION:3.0\nN:${data.hero.name};;;;\nFN:${data.hero.name}\nTITLE:${data.hero.subtitle}\nTEL;TYPE=WORK,VOICE:${data.contact.phone}\nEMAIL:${data.contact.email}\nURL:${data.social.blog}\nNOTE:${data.hero.description}\nEND:VCARD`;
+                    
+                    const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.setAttribute('download', 'Contacto_Gomez_Abogados_Laborales.vcf');
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    this.triggerToast('Contacto guardado en el móvil');
+                }
+            }
+        }
+    </script>
+
+</body></html>
